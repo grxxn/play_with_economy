@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./home.module.scss";
 import mainImg from '../public/assets/images/main1_icon.png';
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -20,8 +21,12 @@ export default function Home() {
         </div>
         <div className={styles.mainBtns}>
           <div>
-            <button type="button">로그인</button>
-            <button type="button">회원가입</button>
+            <button type="button">
+              <Link href={'/Login'}>로그인</Link>
+            </button>
+            <button type="button">
+              <Link href={'/Register'}>회원가입</Link>
+            </button>
           </div>
           <button type="button">경놀 다이어리 사용방법 살펴보기</button>
         </div>
