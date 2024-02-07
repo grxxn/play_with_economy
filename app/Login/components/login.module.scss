@@ -1,0 +1,79 @@
+.loginWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    color: #06B03F;
+    margin-bottom: 64px;
+  }
+
+  .logionBox {
+    width: 570px;
+    height: 600px;
+    border-radius: 18px;
+    background-color: #fff;
+    padding: 74px 68px 63px;
+
+    p {
+      font-size: 28px;
+      font-weight: 700;
+      color: #06B03F;
+      text-align: center;
+      margin-bottom: 67px;
+    }
+
+    label {
+      display: inline-block;
+      color: #7A7A7A;
+      font-size: 14px;
+      margin-bottom: 10px;
+
+      &:last-child {
+        display: inline-block;
+        margin-bottom: 49px;
+      }
+    }
+
+    input {
+      width: 434px;
+      height: 40px;
+      border: 1px solid #B3B3B3;
+      border-radius: 14px;
+
+      &:first-of-type {
+        margin-bottom: 22px;
+      }
+
+      &:nth-of-type(2) {
+        margin-bottom: 11px;
+      }
+
+      &[type="checkbox"] {
+        width: auto;
+        height: auto;
+        margin-bottom: 0;
+        margin-right: 5px;
+      }
+    }
+
+    button {
+      width: 434px;
+      height: 50px;
+      border-radius: 14px;
+      font-size: 14px;
+    }
+
+    button:first-of-type {
+      margin-bottom: 16px;
+    }
+
+    button:last-of-type {
+      background-color: #000;
+      color: #06B03F;
+    }
+  }
+}
