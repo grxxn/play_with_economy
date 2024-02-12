@@ -1,0 +1,127 @@
+.container {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &>h1 {
+    margin-left: 120px;
+    margin-bottom: 38px;
+  }
+
+  textarea {
+    padding: 10px;
+
+    &:focus {
+      outline: 2px solid #06B03F;
+    }
+  }
+
+  h3 {
+    color: #000;
+    margin-bottom: 16px;
+  }
+
+  .ecnmValWrapper {
+    align-self: center;
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 38px;
+
+    .ecnmValBox {
+      width: 270px;
+      height: 290px;
+      border-radius: 15px;
+      background-color: #fff;
+      padding: 26px;
+
+      &>div {
+        display: grid;
+        grid-template-columns: 30px 144px;
+        gap: 3px 20px;
+        margin-bottom: 19px;
+
+        &>input {
+          outline: 0;
+          border-width: 0 0 2px;
+          border: none;
+          border-bottom: 1px solid #2c2c2c;
+          padding: 3px 10px;
+
+          &:focus {
+            border-color: #06B03F;
+          }
+        }
+      }
+
+      label {
+        color: #2d2d2d;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 107px;
+        border: 1px solid #2c2c2c;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .articleWrapper {
+    align-self: center;
+    width: 1200px;
+    border-radius: 15px;
+    background-color: #fff;
+    padding: 24px 27px;
+    margin-bottom: 38px;
+
+    &>div {
+      display: flex;
+
+      &>button {
+        width: 122px;
+        height: 27px;
+        border-radius: 15px;
+        font-size: 12px;
+        margin-left: 40px;
+      }
+    }
+
+    &>ul {
+      margin-left: 20px;
+      list-style: circle;
+    }
+  }
+
+  .genrRevwWrapper {
+    align-self: center;
+    width: 1200px;
+    border-radius: 15px;
+    background-color: #fff;
+    padding: 24px 27px;
+    margin-bottom: 48px;
+
+    &>textarea {
+      width: 100%;
+      min-height: 127px;
+      border-radius: 15px;
+    }
+  }
+
+  .btnWrapper {
+    align-self: center;
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+
+    button:first-of-type {
+      background-color: #fff;
+      color: #06B03F;
+
+      &>a {
+        line-height: 50px;
+      }
+    }
+  }
+}
