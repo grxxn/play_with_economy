@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./components/login.module.scss";
 
-export default function Login() {
+export default function login() {
 
   return (
     <div className={styles.loginWrapper}>
@@ -21,7 +21,9 @@ export default function Login() {
           </label>
         </div>
         <button type="button">로그인</button>
-        <button type="button">회원가입</button>
+        <button type="button">
+          <Link href={'/register'}>회원가입</Link>
+        </button>
       </div>
     </div>
   );

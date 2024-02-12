@@ -22,13 +22,15 @@ export default function Home() {
         <div className={styles.mainBtns}>
           <div>
             <button type="button">
-              <Link href={'/Login'}>로그인</Link>
+              <Link href={'/login'}>로그인</Link>
             </button>
             <button type="button">
-              <Link href={'/Register'}>회원가입</Link>
+              <Link href={'/register'}>회원가입</Link>
             </button>
           </div>
-          <button type="button">경놀 다이어리 사용방법 살펴보기</button>
+          <button type="button">
+            <Link href={'/howtouse'}>경놀 다이어리 사용방법 살펴보기</Link>
+          </button>
         </div>
       </div>
     </div>
