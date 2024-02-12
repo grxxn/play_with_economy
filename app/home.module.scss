@@ -48,6 +48,14 @@
         background-color: #fff;
         color: #06B03F;
       }
+
+      button {
+        height: 70px;
+
+        &>a {
+          line-height: 70px;
+        }
+      }
     }
   }
 }

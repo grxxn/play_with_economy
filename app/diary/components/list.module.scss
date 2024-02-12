@@ -1,0 +1,23 @@
+.container {
+  padding: 67px 88px;
+
+  &>h1 {
+    color: #06B03F;
+    margin-bottom: 48px;
+    font-weight: 900;
+  }
+
+  &>button {
+    width: 280px;
+    border-radius: 15px;
+    float: right;
+
+    &>a {
+      line-height: 50px;
+    }
+  }
+
+  .cardWrapper {
+    margin-bottom: 50px;
+  }
+}
