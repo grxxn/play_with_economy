@@ -6,7 +6,9 @@ export default function DiaryList() {
 
   return (
     <div className={styles.container}>
-      <h1>경제야 놀자</h1>
+      <h1>
+        <Link href={'/'}>경제야 놀자</Link>
+      </h1>
 
       <div className={styles.cardWrapper}>
         <DiaryCard
