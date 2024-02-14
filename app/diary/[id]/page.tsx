@@ -1,8 +1,8 @@
+"use client";
+
 interface DiaryType {
   params: { id: string }
 }
-
-"use client";
 
 import { useEffect, useState } from 'react';
 import styles from '../components/record.module.scss';
