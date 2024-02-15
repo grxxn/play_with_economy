@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import styles from "./components/login.module.scss";
-// import executeQuery from "../_lib/db";
 import { useState } from "react";
-import loginHandler from "../api/login";
 
 interface LoginType {
   userId: string;
@@ -23,11 +21,13 @@ export default function login() {
     setLoginInptVal({ ...loginInptVal, [e.target.name]: e.target.value });
   }
 
+  /**
+   * 로그인 버튼 클릭 이벤트
+   */
   const loginOnClick = () => {
-    console.log('@@@')
-    fetch('/api/login')
-      .then(res => res.json())
-      .then(data => console.log(data));
+    // fetch('/api/login')
+    //   .then(res => res.json())
+    //   .then(data => console.log(data));
   }
 
   return (

@@ -1,45 +1,29 @@
-// import { Query, createPool } from "mysql2";
-
-// const pool = createPool({
+// const mysql = require('mysql2');
+// const connection = mysql.createConnection({
 //   host: 'localhost',
 //   user: process.env.DB_USER,
 //   password: process.env.DB_PASSWORD,
 //   database: process.env.DB
 // });
 
-// pool.getConnection((err, conn) => {
-//   if (err) console.error('Error connecting to database');
-
-//   conn.release();
-// })
-
-// const executeQuery = (query: string, arrParams: any) => {
-//   return new Promise((resolve, reject) => {
-//     try {
-//       pool.query(query, arrParams, (err, result) => {
-//         if (err) reject(err);
-//         resolve(result);
-//       })
-//     } catch (err) {
-//       reject(err);
-//     }
-//   })
-// }
+// module.exports = connection;
 
 
-// export default executeQuery;
-const mysql = require('mysql2');
-const connection = mysql.createConnection({
-  host: 'localhost',
+import mysql from 'mysql2/promise';
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB
 });
-connection.connect((err: any) => {
-  if (err) {
-    console.error('Error connecting to MySQL:', err);
-    return;
+
+// SQL SELECT FNC
+export const selectSQL = async (sqlQuery: string) => {
+  try {
+    const [rows] = await pool.query(sqlQuery);
+    return rows;
+  } catch (error) {
+    console.error(error);
   }
-  console.log('Connected to MySQL');
-});
-module.exports = connection;
+}
