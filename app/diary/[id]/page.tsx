@@ -148,6 +148,7 @@ export default function Record({ params: { id } }: DiaryType) {
     }
   }
 
+
   return (
     <div className={styles.container}>
       <h1>

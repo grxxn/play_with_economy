@@ -1,8 +1,40 @@
+"use client";
+
 import styles from './components/list.module.scss';
 import DiaryCard from "./components/DiaryCard";
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
+interface ListItemType {
+  recSeq: string;
+  excRatVal: string;
+  intrRatVal: string;
+  stcPricVal: string;
+  oilPricVal: string;
+  regDt: string;
+}
 
 export default function DiaryList() {
+  // ======================== 변수 선언 ========================
+  const [listData, setListData] = useState<ListItemType[]>();
+
+  // ======================== 함수 선언 ========================
+
+  /**
+   * 다이어리 리스트 조회
+   */
+  const getListData = () => {
+    fetch('/api/diary/getDiaryList')
+      .then(res => res.json())
+      .then(data => setListData(data));
+  }
+
+  // ======================== 이벤트 선언 ========================
+
+
+  useEffect(() => {
+    getListData();
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -11,7 +43,23 @@ export default function DiaryList() {
       </h1>
 
       <div className={styles.cardWrapper}>
+        {
+          listData && listData.length > 0
+            ? listData.map((item: ListItemType) => (
+              <DiaryCard
+                key={item.recSeq}
+                seq={item.recSeq}
+                date={item.regDt}
+                excRattVal={item.excRatVal}
+                intrRatVal={item.intrRatVal}
+                stcPricVal={item.stcPricVal}
+                oilPricVal={item.oilPricVal}
+              />
+            ))
+            : null
+        }
         <DiaryCard
+          seq='3'
           date="2024.02.05(월)"
           excRattVal="1,333.50원"
           intrRatVal="3.50%"

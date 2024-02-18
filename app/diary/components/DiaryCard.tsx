@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import styles from './card.module.scss';
 
 interface DiaryCardType {
+  seq: string;
   date: string;
   excRattVal: string;
   intrRatVal: string;
@@ -11,7 +12,7 @@ interface DiaryCardType {
   oilPricVal: string;
 }
 
-export default function DiaryCard({ date, excRattVal, intrRatVal, stcPricVal, oilPricVal }: DiaryCardType) {
+export default function DiaryCard({ seq, date, excRattVal, intrRatVal, stcPricVal, oilPricVal }: DiaryCardType) {
   const router = useRouter();
 
   const clickDiaryItem = () => {
