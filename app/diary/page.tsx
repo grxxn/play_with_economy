@@ -58,14 +58,6 @@ export default function DiaryList() {
             ))
             : null
         }
-        <DiaryCard
-          seq='3'
-          date="2024.02.05(월)"
-          excRattVal="1,333.50원"
-          intrRatVal="3.50%"
-          stcPricVal="4,958.61"
-          oilPricVal="72.28"
-        />
       </div>
 
       <button type='button'>

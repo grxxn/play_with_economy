@@ -16,11 +16,7 @@ export default function DiaryCard({ seq, date, excRattVal, intrRatVal, stcPricVa
   const router = useRouter();
 
   const clickDiaryItem = () => {
-    const dateArr = date.substring(0, 10).split('.');
-    const dateParams = dateArr[0] + dateArr[1] + dateArr[2];
-    console.log(dateParams)
-
-    router.push(`/diary/${dateParams}`)
+    router.push(`/diary/${seq}`)
   }
 
   return (

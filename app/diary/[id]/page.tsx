@@ -39,6 +39,7 @@ interface diaryDtoInterface {
 export default function Record({ params: { id } }: DiaryType) {
   // ======================== 변수 선언 ========================
 
+  const [recordDt, setRecordDt] = useState<string>('');
   const [isShowAddArtc, setIsShowAddArtc] = useState<boolean>(false);
   const [diaryDto, setDiaryDto] = useState<diaryDtoInterface>({});
   const [artcItemVal, setArtcItemVal] = useState<string>('');
@@ -148,11 +149,31 @@ export default function Record({ params: { id } }: DiaryType) {
     }
   }
 
+  useEffect(() => {
+    // Diary Date 설정
+    if (id === 'record') {
+      // 등록 모드
+      const date = new Date();
+      const Year = date.getFullYear();
+      const Month = ((date.getMonth() + 1) < 10 ? "0" : "") + (date.getMonth() + 1);
+      const Day = date.getDate();
+      const Today = Year + '.' + Month + '.' + Day;
+
+      setRecordDt(Today);
+    } else {
+      // 수정, 삭제 모드
+      if (id.length > 0) {
+        setRecordDt(id);
+
+      }
+    }
+  }, [id])
+
 
   return (
     <div className={styles.container}>
       <h1>
-        {id}
+        {recordDt}
       </h1>
       <div className={styles.ecnmValWrapper}>
         <div className={styles.ecnmValBox}>
