@@ -11,7 +11,7 @@ import Link from "next/link";
 interface diaryDtoInterface {
   date?: string;
   excRatNat?: string;
-  excRattVal?: string;
+  excRatVal?: string;
   excRatFlu?: string;
   excRatMemo?: string;
   intrRatSrt?: string;
@@ -39,6 +39,7 @@ interface diaryDtoInterface {
 export default function Record({ params: { id } }: DiaryType) {
   // ======================== 변수 선언 ========================
 
+  const [mode, setMode] = useState<string>('');
   const [recordDt, setRecordDt] = useState<string>('');
   const [isShowAddArtc, setIsShowAddArtc] = useState<boolean>(false);
   const [diaryDto, setDiaryDto] = useState<diaryDtoInterface>({});
@@ -46,6 +47,20 @@ export default function Record({ params: { id } }: DiaryType) {
 
 
   // ======================== 함수 선언 ========================
+
+  /**
+   * seq가 있을 경우 상세 조회
+   * @param recSeq 
+   */
+  const getDiaryItem = (recSeq: string) => {
+    fetch(`/api/diary/getDiaryItem?recSeq=${recSeq}`)
+      .then(res => res.json())
+      .then(data => {
+        data[0].artcAddrArr = data[0].artcAddrArr.split(',');
+        setDiaryDto(data[0]);
+        setRecordDt(data[0].regDt);
+      });
+  }
 
   /**
    * submit 전 validation 함수
@@ -58,7 +73,7 @@ export default function Record({ params: { id } }: DiaryType) {
     if (!diaryDto.excRatNat || diaryDto.excRatNat.length === 0) {
       alert('환율 국가를 입력해 주세요.');
       return false;
-    } else if (!diaryDto.excRattVal || diaryDto.excRattVal.length === 0) {
+    } else if (!diaryDto.excRatVal || diaryDto.excRatVal.length === 0) {
       alert('환율 수치를 입력해 주세요.');
       return false;
     } else if (!diaryDto.excRatFlu || diaryDto.excRatFlu.length === 0) {
@@ -149,10 +164,29 @@ export default function Record({ params: { id } }: DiaryType) {
     }
   }
 
+  /**
+   * 다이어리 수정하기 버튼 클릭 이벤트
+   */
+  const updateDiaryOnclick = () => {
+
+  }
+
+  /**
+   * 다이어리 삭제하기 버튼 클릭 이벤트
+   */
+  const deleteDiaryOnclick = () => {
+
+  }
+
+
   useEffect(() => {
-    // Diary Date 설정
+    setDiaryDto({});
+
+    // Diary Date 및 데이터 설정
     if (id === 'record') {
       // 등록 모드
+      setMode('add');
+
       const date = new Date();
       const Year = date.getFullYear();
       const Month = ((date.getMonth() + 1) < 10 ? "0" : "") + (date.getMonth() + 1);
@@ -163,8 +197,11 @@ export default function Record({ params: { id } }: DiaryType) {
     } else {
       // 수정, 삭제 모드
       if (id.length > 0) {
+        setMode('modi');
         setRecordDt(id);
-
+        getDiaryItem(id);
+      } else {
+        alert('[err:001] 잠시 후 다시 시도해 주세요.');
       }
     }
   }, [id])
@@ -180,49 +217,49 @@ export default function Record({ params: { id } }: DiaryType) {
           <h3>환율</h3>
           <div>
             <label>국가</label>
-            <input type="text" name='excRatNat' onChange={inptOnChange} />
+            <input type="text" name='excRatNat' onChange={inptOnChange} value={diaryDto.excRatNat ? diaryDto.excRatNat : ""} />
             <label>수치</label>
-            <input type="text" name='excRatVal' onChange={inptOnChange} />
+            <input type="text" name='excRatVal' onChange={inptOnChange} value={diaryDto.excRatVal ? diaryDto.excRatVal : ""} />
             <label>등락</label>
-            <input type="text" name='excRatFlu' onChange={inptOnChange} />
+            <input type="text" name='excRatFlu' onChange={inptOnChange} value={diaryDto.excRatFlu ? diaryDto.excRatFlu : ""} />
           </div>
-          <textarea name='excRatMemo' onChange={inptOnChange} />
+          <textarea name='excRatMemo' onChange={inptOnChange} value={diaryDto.excRatMemo ? diaryDto.excRatMemo : ""} />
         </div>
         <div className={styles.ecnmValBox}>
           <h3>금리</h3>
           <div>
             <label>종류</label>
-            <input type="text" name='intrRatSrt' onChange={inptOnChange} />
+            <input type="text" name='intrRatSrt' onChange={inptOnChange} value={diaryDto.intrRatSrt ? diaryDto.intrRatSrt : ""} />
             <label>수치</label>
-            <input type="text" name='intrRatVal' onChange={inptOnChange} />
+            <input type="text" name='intrRatVal' onChange={inptOnChange} value={diaryDto.intrRatVal ? diaryDto.intrRatVal : ""} />
             <label>등락</label>
-            <input type="text" name='intrRatFlu' onChange={inptOnChange} />
+            <input type="text" name='intrRatFlu' onChange={inptOnChange} value={diaryDto.intrRatFlu ? diaryDto.intrRatFlu : ""} />
           </div>
-          <textarea name='intrRatMemo' />
+          <textarea name='intrRatMemo' onChange={inptOnChange} value={diaryDto.intrRatMemo ? diaryDto.intrRatMemo : ""} />
         </div>
         <div className={styles.ecnmValBox}>
           <h3>주가</h3>
           <div>
             <label>종류</label>
-            <input type="text" name='stcPricSrt' onChange={inptOnChange} />
+            <input type="text" name='stcPricSrt' onChange={inptOnChange} value={diaryDto.stcPricSrt ? diaryDto.stcPricSrt : ""} />
             <label>수치</label>
-            <input type="text" name='stcPricVal' onChange={inptOnChange} />
+            <input type="text" name='stcPricVal' onChange={inptOnChange} value={diaryDto.stcPricVal ? diaryDto.stcPricVal : ""} />
             <label>등락</label>
-            <input type="text" name='stcPricFlu' onChange={inptOnChange} />
+            <input type="text" name='stcPricFlu' onChange={inptOnChange} value={diaryDto.stcPricFlu ? diaryDto.stcPricFlu : ""} />
           </div>
-          <textarea name='srcPricMemo' onChange={inptOnChange} />
+          <textarea name='stcPricMemo' onChange={inptOnChange} value={diaryDto.stcPricMemo ? diaryDto.stcPricMemo : ""} />
         </div>
         <div className={styles.ecnmValBox}>
           <h3>유가</h3>
           <div>
             <label>종류</label>
-            <input type="text" name='oilPricSrt' onChange={inptOnChange} />
+            <input type="text" name='oilPricSrt' onChange={inptOnChange} value={diaryDto.oilPricSrt ? diaryDto.oilPricSrt : ""} />
             <label>수치</label>
-            <input type="text" name='oilPricVal' onChange={inptOnChange} />
+            <input type="text" name='oilPricVal' onChange={inptOnChange} value={diaryDto.oilPricVal ? diaryDto.oilPricVal : ""} />
             <label>등락</label>
-            <input type="text" name='oilPricFlu' onChange={inptOnChange} />
+            <input type="text" name='oilPricFlu' onChange={inptOnChange} value={diaryDto.oilPricFlu ? diaryDto.oilPricFlu : ""} />
           </div>
-          <textarea name='oilPricMemo' onChange={inptOnChange} />
+          <textarea name='oilPricMemo' onChange={inptOnChange} value={diaryDto.oilPricMemo ? diaryDto.oilPricMemo : ""} />
         </div>
       </div>
       <div className={styles.articleWrapper}>
@@ -260,13 +297,20 @@ export default function Record({ params: { id } }: DiaryType) {
       </div>
       <div className={styles.genrRevwWrapper}>
         <h3>오늘의 경제 총평 및 정리</h3>
-        <textarea name='recGenrRevw' onChange={inptOnChange} />
+        <textarea name='recGenrRevw' onChange={inptOnChange} value={diaryDto.recGenrRevw ? diaryDto.recGenrRevw : ""} />
       </div>
       <div className={styles.btnWrapper}>
         <button type="button">
           <Link href={'/diary'}>목록으로</Link>
         </button>
-        <button type="button" onClick={submitDiaryOnClick}>기록하기</button>
+        {
+          mode === 'add'
+            ? <button type="button" onClick={submitDiaryOnClick}>기록하기</button>
+            : <div>
+              <button type="button" onClick={deleteDiaryOnclick}>삭제하기</button>
+              <button type="button" onClick={updateDiaryOnclick}>수정하기</button>
+            </div>
+        }
       </div>
     </div >
   )

@@ -179,5 +179,13 @@
         line-height: 50px;
       }
     }
+
+    &>div {
+      button:first-of-type {
+        background-color: red;
+        color: #fff;
+        margin-right: 10px;
+      }
+    }
   }
 }

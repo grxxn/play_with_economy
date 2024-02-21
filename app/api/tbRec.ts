@@ -23,6 +23,10 @@ export interface TbRecInterface {
   modDt: string;
 }
 
+/**
+ * 다이어리 리스트 조회
+ * @returns 
+ */
 export const getDiaryList = () => {
   const sql = `
     SELECT REC_SEQ			as recSeq
@@ -37,12 +41,43 @@ export const getDiaryList = () => {
   return selectSQL(sql);
 }
 
+/**
+ * 다이어리 아이템 조회
+ * @param recSeq 
+ */
 export const getDiaryItem = (recSeq: string) => {
   const sql = `
-    SELECT * FROM TB_REC WHERE REC_SEQ = ${recSeq};
+    SELECT EXC_RAT_NAT		as excRatNat
+          , EXC_RAT_VAL	  as excRatVal
+          , EXC_RAT_FLU	  as excRatFlu
+          , EXC_RAT_MEMO	as excRatMemo
+          , INTR_RAT_SRT	as intrRatSrt
+          , INTR_RAT_VAL	as intrRatVal
+          , INTR_RAT_FLU	as intrRatFlu
+          , INTR_RAT_MEMO	as intrRatMemo
+          , STC_PRIC_SRT	as stcPricSrt
+          , STC_PRIC_VAL	as stcPricVal
+          , STC_PRIC_FLU	as stcPricFlu
+          , STC_PRIC_MEMO	as stcPricMemo
+          , OIL_PRIC_SRT	as oilPricSrt
+          , OIL_PRIC_VAL	as oilPricVal
+          , OIL_PRIC_FLU	as oilPricFlu
+          , OIL_PRIC_MEMO	as oilPricMemo
+          , REC_GENR_REVW	as recGenrRevw
+          , (SELECT GROUP_CONCAT(ARTC_ADDR) AS artcAddrs FROM TB_REC_ARTCS B WHERE B.REC_SEQ = A.REC_SEQ) as artcAddrArr
+          , DATE_FORMAT(REG_DT, "%Y.%m.%d")  	as regDt
+          , DATE_FORMAT(MOD_DT, "%Y.%m.%d")	  as modDt
+    FROM TB_REC A
+    WHERE REC_SEQ = ${recSeq};
   `
+
+  return selectSQL(sql);
 }
 
+/**
+ * 다이어리 아이템 등록
+ * @param params 
+ */
 export const setDiaryItem = (params: TbRecInterface) => {
   const date = new Date();
 
