@@ -1,3 +1,4 @@
+import { DiaryDtoInterface } from './../diary/[id]/page';
 import { selectSQL } from "../_lib/db";
 
 export interface TbRecInterface {
@@ -78,8 +79,9 @@ export const getDiaryItem = (recSeq: string) => {
  * 다이어리 아이템 등록
  * @param params 
  */
-export const setDiaryItem = (params: TbRecInterface) => {
+export const setDiaryItem = (params: DiaryDtoInterface) => {
   const date = new Date();
+  console.log(params)
 
   const sql = `
     INSERT INTO TB_REC (
@@ -100,29 +102,64 @@ export const setDiaryItem = (params: TbRecInterface) => {
       OIL_PRIC_FLU,
       OIL_PRIC_MEMO,
       REC_GENR_REVW,
-      REG_DT,
-      MOD_DT
+      REG_DT
     ) VALUES (
-      ${params.excRatNat},
-      ${params.excRatVal},
-      ${params.excRatFlu},
-      ${params.excRatMemo},
-      ${params.intrRatSrt},
-      ${params.intrRatVal},
-      ${params.intrRatFlu},
-      ${params.intrRatMemo},
-      ${params.stcPricSrt},
-      ${params.stcPricVal},
-      ${params.stcPricFlu},
-      ${params.stcPricMemo},
-      ${params.oilPricSrt},
-      ${params.oliPricVal},
-      ${params.oilPricFlu},
-      ${params.oilPricMemo},
-      ${params.recGenrRevw},
-      ${params.oilPricFlu},
-      ${date},
-      ${date},
+      '${params.excRatNat}',
+      '${params.excRatVal}',
+      '${params.excRatFlu}',
+      '${params.excRatMemo}',
+      '${params.intrRatSrt}',
+      '${params.intrRatVal}',
+      '${params.intrRatFlu}',
+      '${params.intrRatMemo}',
+      '${params.stcPricSrt}',
+      '${params.stcPricVal}',
+      '${params.stcPricFlu}',
+      '${params.stcPricMemo}',
+      '${params.oilPricSrt}',
+      '${params.oilPricVal}',
+      '${params.oilPricFlu}',
+      '${params.oilPricMemo}',
+      '${params.recGenrRevw}',
+      '${params.date}'
     )
   `
+
+  console.log('@@@@ ', sql);
+  return selectSQL(sql);
+}
+
+/**
+ * 다이어리 기사 등록
+ * @param artcAddr 
+ * @returns 
+ */
+export const setAtrcAddrs = (artcAddr: string, date: string) => {
+  const sql = `
+    INSERT INTO TB_REC_ARTCS (
+      REC_SEQ,
+      ARTC_ADDR,
+      REB_DT
+    ) VALUES (
+      (SELECT REC_SEQ FROM TB_REC ORDER BY REC_SEQ DESC LIMIT 1),
+      '${artcAddr}',
+      '${date}'
+    )
+  `;
+
+  return selectSQL(sql);
+}
+
+/**
+ * 다이어리 아이템 수정
+ */
+export const updateDiaryItem = () => {
+
+}
+
+/**
+ * 다이어리 아이템 삭제
+ */
+export const deleteDiaryItem = () => {
+
 }

@@ -7,8 +7,9 @@ interface DiaryType {
 import { useEffect, useState } from 'react';
 import styles from '../components/record.module.scss';
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
-interface diaryDtoInterface {
+export interface DiaryDtoInterface {
   date?: string;
   excRatNat?: string;
   excRatVal?: string;
@@ -42,9 +43,10 @@ export default function Record({ params: { id } }: DiaryType) {
   const [mode, setMode] = useState<string>('');
   const [recordDt, setRecordDt] = useState<string>('');
   const [isShowAddArtc, setIsShowAddArtc] = useState<boolean>(false);
-  const [diaryDto, setDiaryDto] = useState<diaryDtoInterface>({});
+  const [diaryDto, setDiaryDto] = useState<DiaryDtoInterface>({});
   const [artcItemVal, setArtcItemVal] = useState<string>('');
 
+  const router = useRouter();
 
   // ======================== 함수 선언 ========================
 
@@ -70,48 +72,49 @@ export default function Record({ params: { id } }: DiaryType) {
     // 환율, 금리, 주가, 유가 -> 메모 부분 제외하고 모두 필수
     // 기사 필수 아님, 총평 필수
 
-    if (!diaryDto.excRatNat || diaryDto.excRatNat.length === 0) {
-      alert('환율 국가를 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.excRatVal || diaryDto.excRatVal.length === 0) {
-      alert('환율 수치를 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.excRatFlu || diaryDto.excRatFlu.length === 0) {
-      alert('환율 등락을 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.intrRatSrt || diaryDto.intrRatSrt.length === 0) {
-      alert('금리 종류를 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.intrRatVal || diaryDto.intrRatVal.length === 0) {
-      alert('금리 수치를 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.intrRatFlu || diaryDto.intrRatFlu.length === 0) {
-      alert('금리 등락을 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.stcPricSrt || diaryDto.stcPricSrt.length === 0) {
-      alert('주가 종류를 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.stcPricVal || diaryDto.stcPricVal.length === 0) {
-      alert('주가 수치를 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.stcPricFlu || diaryDto.stcPricFlu.length === 0) {
-      alert('주가 등락을 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.oilPricSrt || diaryDto.oilPricSrt.length === 0) {
-      alert('유가 종류를 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.oilPricVal || diaryDto.oilPricVal.length === 0) {
-      alert('유가 수치를 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.oilPricFlu || diaryDto.oilPricFlu.length === 0) {
-      alert('유가 등락을 입력해 주세요.');
-      return false;
-    } else if (!diaryDto.recGenrRevw || diaryDto.recGenrRevw.length === 0) {
-      alert('총평을 입력해 주세요.');
-      return false;
-    } else {
-      return true;
-    }
+    return true;
+    // if (!diaryDto.excRatNat || diaryDto.excRatNat.length === 0) {
+    //   alert('환율 국가를 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.excRatVal || diaryDto.excRatVal.length === 0) {
+    //   alert('환율 수치를 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.excRatFlu || diaryDto.excRatFlu.length === 0) {
+    //   alert('환율 등락을 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.intrRatSrt || diaryDto.intrRatSrt.length === 0) {
+    //   alert('금리 종류를 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.intrRatVal || diaryDto.intrRatVal.length === 0) {
+    //   alert('금리 수치를 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.intrRatFlu || diaryDto.intrRatFlu.length === 0) {
+    //   alert('금리 등락을 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.stcPricSrt || diaryDto.stcPricSrt.length === 0) {
+    //   alert('주가 종류를 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.stcPricVal || diaryDto.stcPricVal.length === 0) {
+    //   alert('주가 수치를 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.stcPricFlu || diaryDto.stcPricFlu.length === 0) {
+    //   alert('주가 등락을 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.oilPricSrt || diaryDto.oilPricSrt.length === 0) {
+    //   alert('유가 종류를 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.oilPricVal || diaryDto.oilPricVal.length === 0) {
+    //   alert('유가 수치를 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.oilPricFlu || diaryDto.oilPricFlu.length === 0) {
+    //   alert('유가 등락을 입력해 주세요.');
+    //   return false;
+    // } else if (!diaryDto.recGenrRevw || diaryDto.recGenrRevw.length === 0) {
+    //   alert('총평을 입력해 주세요.');
+    //   return false;
+    // } else {
+    //   return true;
+    // }
   }
 
 
@@ -156,26 +159,45 @@ export default function Record({ params: { id } }: DiaryType) {
   }
 
   /**
-   * 다이어리 기록하기 버튼 클릭 이벤트
+   * 다이어리 기록하기 버튼 클릭 이벤트 (등록)
    */
   const submitDiaryOnClick = () => {
     if (validationDiary()) {
-      console.log(diaryDto);
+      fetch('/api/diary/setDiaryItem', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(diaryDto),
+      })
+        .then(() => {
+          alert('등록이 완료되었습니다');
+          router.push('/diary');
+        })
+        .catch(error => {
+          console.error(error);
+          alert('등록이 실패하였습니다. 잠시 후 다시 시도해주세요.');
+        });
     }
   }
 
   /**
-   * 다이어리 수정하기 버튼 클릭 이벤트
+   * 다이어리 수정하기 버튼 클릭 이벤트 (수정)
    */
   const updateDiaryOnclick = () => {
+    if (window.confirm('수정하시겠습니까?')) {
 
+    }
   }
 
   /**
-   * 다이어리 삭제하기 버튼 클릭 이벤트
+   * 다이어리 삭제하기 버튼 클릭 이벤트 (삭제)
    */
   const deleteDiaryOnclick = () => {
-
+    if (window.confirm('삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.')) {
+      // fetch
+    }
   }
 
 
@@ -194,11 +216,13 @@ export default function Record({ params: { id } }: DiaryType) {
       const Today = Year + '.' + Month + '.' + Day;
 
       setRecordDt(Today);
+      setDiaryDto({ ...diaryDto, date: Today });
     } else {
       // 수정, 삭제 모드
       if (id.length > 0) {
         setMode('modi');
         setRecordDt(id);
+        // seq 데이터 조회
         getDiaryItem(id);
       } else {
         alert('[err:001] 잠시 후 다시 시도해 주세요.');
