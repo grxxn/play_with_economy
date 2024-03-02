@@ -54,3 +54,7 @@ button {
 textarea {
   resize: none;
 }
+
+input:focus {
+  outline: 1px solid #06B03F;
+}

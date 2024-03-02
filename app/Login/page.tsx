@@ -28,11 +28,30 @@ export default function login() {
    * 로그인 버튼 클릭 이벤트
    */
   const loginOnClick = () => {
-    // fetch('/api/login')
-    //   .then(res => res.json())
-    //   .then(data => console.log(data));
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(loginInptVal)
+    })
+      .then(res => {
 
-    router.push('/diary')
+        return res.json()
+      })
+      .then(data => {
+        // 세션 설정
+        if (data.length > 0) {
+
+          // router.push('/diary');
+        } else {
+          alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+        }
+      })
+      .catch(err => {
+        alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+      });
   }
 
   return (

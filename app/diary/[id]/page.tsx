@@ -72,49 +72,48 @@ export default function Record({ params: { id } }: DiaryType) {
     // 환율, 금리, 주가, 유가 -> 메모 부분 제외하고 모두 필수
     // 기사 필수 아님, 총평 필수
 
-    return true;
-    // if (!diaryDto.excRatNat || diaryDto.excRatNat.length === 0) {
-    //   alert('환율 국가를 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.excRatVal || diaryDto.excRatVal.length === 0) {
-    //   alert('환율 수치를 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.excRatFlu || diaryDto.excRatFlu.length === 0) {
-    //   alert('환율 등락을 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.intrRatSrt || diaryDto.intrRatSrt.length === 0) {
-    //   alert('금리 종류를 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.intrRatVal || diaryDto.intrRatVal.length === 0) {
-    //   alert('금리 수치를 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.intrRatFlu || diaryDto.intrRatFlu.length === 0) {
-    //   alert('금리 등락을 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.stcPricSrt || diaryDto.stcPricSrt.length === 0) {
-    //   alert('주가 종류를 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.stcPricVal || diaryDto.stcPricVal.length === 0) {
-    //   alert('주가 수치를 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.stcPricFlu || diaryDto.stcPricFlu.length === 0) {
-    //   alert('주가 등락을 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.oilPricSrt || diaryDto.oilPricSrt.length === 0) {
-    //   alert('유가 종류를 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.oilPricVal || diaryDto.oilPricVal.length === 0) {
-    //   alert('유가 수치를 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.oilPricFlu || diaryDto.oilPricFlu.length === 0) {
-    //   alert('유가 등락을 입력해 주세요.');
-    //   return false;
-    // } else if (!diaryDto.recGenrRevw || diaryDto.recGenrRevw.length === 0) {
-    //   alert('총평을 입력해 주세요.');
-    //   return false;
-    // } else {
-    //   return true;
-    // }
+    if (!diaryDto.excRatNat || diaryDto.excRatNat.length === 0) {
+      alert('환율 국가를 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.excRatVal || diaryDto.excRatVal.length === 0) {
+      alert('환율 수치를 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.excRatFlu || diaryDto.excRatFlu.length === 0) {
+      alert('환율 등락을 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.intrRatSrt || diaryDto.intrRatSrt.length === 0) {
+      alert('금리 종류를 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.intrRatVal || diaryDto.intrRatVal.length === 0) {
+      alert('금리 수치를 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.intrRatFlu || diaryDto.intrRatFlu.length === 0) {
+      alert('금리 등락을 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.stcPricSrt || diaryDto.stcPricSrt.length === 0) {
+      alert('주가 종류를 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.stcPricVal || diaryDto.stcPricVal.length === 0) {
+      alert('주가 수치를 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.stcPricFlu || diaryDto.stcPricFlu.length === 0) {
+      alert('주가 등락을 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.oilPricSrt || diaryDto.oilPricSrt.length === 0) {
+      alert('유가 종류를 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.oilPricVal || diaryDto.oilPricVal.length === 0) {
+      alert('유가 수치를 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.oilPricFlu || diaryDto.oilPricFlu.length === 0) {
+      alert('유가 등락을 입력해 주세요.');
+      return false;
+    } else if (!diaryDto.recGenrRevw || diaryDto.recGenrRevw.length === 0) {
+      alert('총평을 입력해 주세요.');
+      return false;
+    } else {
+      return true;
+    }
   }
 
 
@@ -124,9 +123,7 @@ export default function Record({ params: { id } }: DiaryType) {
    * input change 이벤트
    */
   const inptOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (e.target.name === 'artcAddrArr') {
-      console.log(diaryDto.artcAddrArr)
-    } else {
+    if (e.target.name !== 'artcAddrArr') {
       setDiaryDto({ ...diaryDto, [e.target.name]: e.target.value });
     }
   }

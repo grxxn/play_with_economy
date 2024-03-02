@@ -81,7 +81,6 @@ export const getDiaryItem = (recSeq: string) => {
  */
 export const setDiaryItem = (params: DiaryDtoInterface) => {
   const date = new Date();
-  console.log(params)
 
   const sql = `
     INSERT INTO TB_REC (
@@ -125,7 +124,6 @@ export const setDiaryItem = (params: DiaryDtoInterface) => {
     )
   `
 
-  console.log('@@@@ ', sql);
   return selectSQL(sql);
 }
 
