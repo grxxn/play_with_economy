@@ -2,57 +2,99 @@
 
 import Link from "next/link";
 import styles from "./components/login.module.scss";
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface LoginType {
   userId: string;
   userPw: string;
+  rememberMe: boolean;
 }
 
 export default function login() {
   // ======================== 변수 선언 ========================
-  const [loginInptVal, setLoginInptVal] = useState<LoginType>({ userId: '', userPw: '' });
-
+  const [loginInptVal, setLoginInptVal] = useState<LoginType>({ userId: '', userPw: '', rememberMe: false });
+  const pwInptRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   // ======================== 함수 선언 ========================
 
   // ======================== 이벤트 선언 ========================
 
+  /**
+   * input change event
+   * @param e 
+   */
   const inptOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginInptVal({ ...loginInptVal, [e.target.name]: e.target.value });
+    if (e.target.name === 'rememberMe') {
+      setLoginInptVal({ ...loginInptVal, rememberMe: !loginInptVal.rememberMe });
+    } else {
+      setLoginInptVal({ ...loginInptVal, [e.target.name]: e.target.value });
+    }
+  }
+
+  /**
+   * 비밀번호 엔터키 이벤트
+   */
+  const pwOnKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 비밀번호 input에서 enter 시 로그인 실행
+    if (e.code === 'Enter') loginOnClick();
   }
 
   /**
    * 로그인 버튼 클릭 이벤트
    */
   const loginOnClick = () => {
-    fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(loginInptVal)
-    })
-      .then(res => {
 
-        return res.json()
+    if (loginInptVal.userId.length === 0 || loginInptVal.userPw.length === 0) {
+      // login validation
+      alert('아이디 또는 비밀번호를 입력해 주세요.');
+    } else {
+      // 아이디 기억하기
+      if (loginInptVal.rememberMe) {
+        localStorage.setItem('userId', loginInptVal.userId);
+      } else {
+        localStorage.removeItem('userId');
+      }
+
+      // 로그인 통신
+      fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginInptVal)
       })
-      .then(data => {
-        // 세션 설정
-        if (data.length > 0) {
-
-          // router.push('/diary');
-        } else {
+        .then(res => {
+          return res.json()
+        })
+        .then(data => {
+          // 세션 설정
+          if (data.length > 0) {
+            router.push('/diary');
+          } else {
+            alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+            setLoginInptVal({ ...loginInptVal, userPw: '' });
+            if (pwInptRef.current) pwInptRef.current.focus();
+          }
+        })
+        .catch(err => {
           alert('아이디 또는 비밀번호가 일치하지 않습니다.');
-        }
-      })
-      .catch(err => {
-        alert('아이디 또는 비밀번호가 일치하지 않습니다.');
-      });
+          setLoginInptVal({ ...loginInptVal, userPw: '' });
+          if (pwInptRef.current) pwInptRef.current.focus();
+        });
+    }
   }
+
+
+  useEffect(() => {
+    // 아이디 기억하기  로컬스토리지 확인
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      setLoginInptVal({ ...loginInptVal, userId: userId, rememberMe: true });
+    }
+  }, [])
 
   return (
     <div className={styles.loginWrapper}>
@@ -63,11 +105,11 @@ export default function login() {
         <p>로그인</p>
         <div>
           <label>아이디</label>
-          <input type="text" name="userId" onChange={inptOnChange} />
+          <input type="text" name="userId" value={loginInptVal.userId} onChange={inptOnChange} />
           <label>비밀번호</label>
-          <input type="password" name="userPw" onChange={inptOnChange} />
+          <input type="password" name="userPw" value={loginInptVal.userPw} ref={pwInptRef} onChange={inptOnChange} onKeyUp={pwOnKeyUp} />
           <label>
-            <input type="checkbox" />
+            <input type="checkbox" name="rememberMe" checked={loginInptVal.rememberMe} onChange={inptOnChange} />
             <span>아이디 기억하기</span>
           </label>
         </div>
