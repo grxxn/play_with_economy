@@ -28,7 +28,7 @@ export interface TbRecInterface {
  * 다이어리 리스트 조회
  * @returns 
  */
-export const getDiaryList = () => {
+export const getDiaryList = (userSeq: string) => {
   const sql = `
     SELECT REC_SEQ			as recSeq
         , EXC_RAT_VAL 	as excRatVal
@@ -36,7 +36,10 @@ export const getDiaryList = () => {
         , STC_PRIC_VAL	as stcPricVal
         , OIL_PRIC_VAL	as oilPricVal
         , DATE_FORMAT(REG_DT, "%Y.%m.%d")		as regDt
-    FROM TB_REC ORDER BY REC_SEQ DESC;
+    FROM TB_REC
+    WHERE USE_YN = 'Y'
+    AND USER_SEQ = '${userSeq}'
+    ORDER BY REC_SEQ DESC;
   `
 
   return selectSQL(sql);
