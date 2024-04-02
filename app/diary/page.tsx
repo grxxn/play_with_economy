@@ -4,6 +4,7 @@ import styles from './components/list.module.scss';
 import DiaryCard from "./components/DiaryCard";
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { cookies } from 'next/headers';
 
 interface ListItemType {
   recSeq: string;
@@ -29,24 +30,46 @@ export default function DiaryList() {
   /**
    * 다이어리 리스트 조회
    */
-  const getListData = () => {
-    fetch('/api/diary/getDiaryList')
+  const getListData = (userSeq: string) => {
+    fetch(`/api/diary/getDiaryList?userSeq=${userSeq}`)
       .then(res => res.json())
       .then(data => setListData(data));
   }
 
   // ======================== 이벤트 선언 ========================
 
+  /**
+   * 로그아웃 버튼 클릭 이벤트
+   */
+  const logoutOnClick = () => {
+    // 로그아웃 -> 첫 페이지로 이동 + localStorage 로그인정보 삭제
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userRole');
+    window.location.href = '/';
+  }
+
 
   useEffect(() => {
-    getListData();
+    // 로그인 데이터 확인
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      getListData(accessToken);
+    } else {
+      alert('로그인 후 이용 가능합니다.');
+      window.location.href = '/login';
+    }
   }, [])
 
   return (
     <div className={styles.container}>
-      <h1>
-        <Link href={'/'}>경제야 놀자</Link>
-      </h1>
+      <div className={styles.diaryListHeader}>
+        <h1>
+          <Link href={'/'}>경제야 놀자</Link>
+        </h1>
+        <button onClick={logoutOnClick}>
+          로그아웃
+        </button>
+      </div>
 
       <div className={styles.cardWrapper}>
         {

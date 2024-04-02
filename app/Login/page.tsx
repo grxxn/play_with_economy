@@ -70,8 +70,13 @@ export default function login() {
           return res.json()
         })
         .then(data => {
-          // 세션 설정
           if (data.length > 0) {
+            // localStorage에 로그인 데이터 저장
+            localStorage.setItem('accessToken', data[0].USER_SEQ);
+            localStorage.setItem('userId', data[0].USER_ID);
+            localStorage.setItem('userRole', data[0].USER_ROLE);
+
+            // 로그인 페이지로 이동
             router.push('/diary');
           } else {
             alert('아이디 또는 비밀번호가 일치하지 않습니다.');
@@ -89,7 +94,7 @@ export default function login() {
 
 
   useEffect(() => {
-    // 아이디 기억하기  로컬스토리지 확인
+    // 아이디 기억하기 - 로컬스토리지 확인
     const userId = localStorage.getItem('userId');
     if (userId) {
       setLoginInptVal({ ...loginInptVal, userId: userId, rememberMe: true });
