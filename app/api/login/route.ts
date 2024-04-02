@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { getUserData } from "../tbUser";
 import { cookies } from "next/headers";
 
+/**
+ * 로그인 API
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export async function POST(req: NextRequest, res: NextResponse) {
   const body = await req.json();
 

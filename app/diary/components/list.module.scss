@@ -1,10 +1,23 @@
 .container {
   padding: 67px 88px;
 
-  &>h1 {
-    color: #06B03F;
+  .diaryListHeader {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 48px;
-    font-weight: 900;
+
+    &>h1 {
+      color: #06B03F;
+      font-weight: 900;
+    }
+
+    &>button {
+      width: auto;
+      height: auto;
+      padding: 0 10px;
+      background-color: transparent;
+      cursor: pointer;
+    }
   }
 
   &>button {

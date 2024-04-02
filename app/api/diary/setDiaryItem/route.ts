@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { setAtrcAddrs, setDiaryItem } from "../../tbRec";
+import { insArtcAddrs, insDiaryItem } from "../../tbRec";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   if (req.method !== "POST") {
@@ -12,9 +12,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const body = await req.json();
 
-    await setDiaryItem(body);
+    await insDiaryItem(body);
     for (let i = 0; i < body.artcAddrArr.length; i++) {
-      await setAtrcAddrs(body.artcAddrArr[i], body.date);
+      await insArtcAddrs(body.artcAddrArr[i]);
     }
 
     return new NextResponse(null, {
