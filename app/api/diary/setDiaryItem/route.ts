@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { insArtcAddrs, insDiaryItem } from "../../tbRec";
 
+/**
+ * 다이어리 아이템 등록 API
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export async function POST(req: NextRequest, res: NextResponse) {
   if (req.method !== "POST") {
     return new NextResponse(null, {
@@ -14,7 +20,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     await insDiaryItem(body);
     for (let i = 0; i < body.artcAddrArr.length; i++) {
-      await insArtcAddrs(body.artcAddrArr[i]);
+      if (body.artcAddrArr[i].useYn !== 'N') {
+        await insArtcAddrs(body.artcAddrArr[i]);
+      }
     }
 
     return new NextResponse(null, {

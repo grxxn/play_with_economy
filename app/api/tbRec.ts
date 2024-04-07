@@ -1,4 +1,4 @@
-import { DiaryDtoInterface } from './../diary/[id]/page';
+import { DiaryArtcArrType, DiaryDtoInterface } from './../diary/[id]/page';
 import { selectSQL } from "../_lib/db";
 
 export interface TbRecInterface {
@@ -79,16 +79,6 @@ export const getDiaryItem = (recSeq: string) => {
   return selectSQL(sql);
 }
 
-export const getArtcCnt = (recSeq: string) => {
-  const sql = `
-    SELECT COUNT(*) as cnt
-    FROM TB_REC_ARTCS
-    WHERE REC_SEQ = ${recSeq};
-  `
-
-  return selectSQL(sql);
-}
-
 /**
  * 다이어리 기사 조회
  * @param recSeq 
@@ -96,10 +86,12 @@ export const getArtcCnt = (recSeq: string) => {
  */
 export const getArtcAddr = (recSeq: string) => {
   const sql = `
-    SELECT  ARTC_SEQ
-          , ARTC_ADDR
+    SELECT  ARTC_SEQ  as artcSeq
+          , ARTC_ADDR as artcAddr
+          , USE_YN    as useYn
     FROM    TB_REC_ARTCS
-    WHERE   REC_SEQ = ${recSeq};
+    WHERE   REC_SEQ = ${recSeq}
+    AND     USE_YN = 'Y'
   `;
 
   return selectSQL(sql);
@@ -165,7 +157,7 @@ export const insArtcAddrs = (artcAddr: string) => {
     INSERT INTO TB_REC_ARTCS (
       REC_SEQ,
       ARTC_ADDR,
-      REB_DT
+      REG_DT
     ) VALUES (
       (SELECT REC_SEQ FROM TB_REC ORDER BY REC_SEQ DESC LIMIT 1),
       '${artcAddr}',
@@ -207,12 +199,41 @@ export const updateDiaryItem = (recSeq: string, params: DiaryDtoInterface) => {
   return selectSQL(sql);
 }
 
-export const updateAtrcAddrs = (recSeq: string, artcAddr: string) => {
+/**
+ * 다이어리 기사 아이템 수정
+ * @param recSeq 
+ * @param artcAddr 
+ * @returns 
+ */
+export const updateAtrcAddrs = (data: DiaryArtcArrType) => {
   const sql = `
     UPDATE  TB_REC_ARTCS  
-    SET     ARTC_ADDR = '${artcAddr}',
-            MOD_DT = CURRENT_TIMESTAMP
-    WHERE   REC_SEQ = ${recSeq}
+    SET     ARTC_ADDR = '${data.artcAddr}',
+            MOD_DT = CURRENT_TIMESTAMP,
+            USE_YN = '${data.useYn}'
+    WHERE   ARTC_SEQ = ${data.artcSeq}
+  `;
+
+  return selectSQL(sql);
+}
+
+/**
+ * 다이어리 기사 수정모드에서 등록
+ * @param recSeq 
+ * @param artcAddr 
+ * @returns 
+ */
+export const updNewAtrcAddrs = (recSeq: string, artcAddr: string) => {
+  const sql = `
+    INSERT INTO TB_REC_ARTCS (
+      REC_SEQ,
+      ARTC_ADDR,
+      REG_DT
+    ) VALUES (
+      ${recSeq},
+      '${artcAddr}',
+      CURRENT_TIMESTAMP
+    )
   `;
 
   return selectSQL(sql);

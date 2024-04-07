@@ -27,8 +27,14 @@ export interface DiaryDtoInterface {
   oilPricVal?: string;
   oilPricFlu?: string;
   oilPricMemo?: string;
-  artcAddrArr?: string[];
+  artcAddrArr?: DiaryArtcArrType[];
   recGenrRevw?: string;
+}
+
+export type DiaryArtcArrType = {
+  artcSeq: string
+  artcAddr: string
+  useYn: string
 }
 
 /**
@@ -41,6 +47,7 @@ export default function Record({ params: { id } }: DiaryType) {
   // ======================== 변수 선언 ========================
 
   const [mode, setMode] = useState<string>('');
+  const [diarySeq, setDiarySeq] = useState<string>('');
   const [recordDt, setRecordDt] = useState<string>('');
   const [isShowAddArtc, setIsShowAddArtc] = useState<boolean>(false);
   const [diaryDto, setDiaryDto] = useState<DiaryDtoInterface>({});
@@ -58,9 +65,9 @@ export default function Record({ params: { id } }: DiaryType) {
     fetch(`/api/diary/getDiaryItem?recSeq=${recSeq}`)
       .then(res => res.json())
       .then(data => {
-        data[0].artcAddrArr = data[0].artcAddrArr.split(',');
-        setDiaryDto(data[0]);
-        setRecordDt(data[0].regDt);
+        if (data.artcArr.length > 0) data.diaryData[0].artcAddrArr = data.artcArr;
+        setDiaryDto(data.diaryData[0]);
+        setRecordDt(data.diaryData[0].regDt);
       });
   }
 
@@ -134,7 +141,11 @@ export default function Record({ params: { id } }: DiaryType) {
   const addArticleOnClick = () => {
     if (artcItemVal.length > 0) {
       const artcAddrCopyArr = diaryDto.artcAddrArr ? [...diaryDto.artcAddrArr] : [];
-      artcAddrCopyArr.push(artcItemVal);
+      artcAddrCopyArr.push({
+        artcSeq: '',
+        artcAddr: artcItemVal,
+        useYn: 'Y'
+      });
       setDiaryDto({ ...diaryDto, artcAddrArr: artcAddrCopyArr });
       // 초기화
       setArtcItemVal('');
@@ -147,11 +158,17 @@ export default function Record({ params: { id } }: DiaryType) {
    * @param artcAddr 
    * @param idx 
    */
-  const deleteArtcOnClick = (artcAddr: string, idx: number) => {
-    if (diaryDto.artcAddrArr?.indexOf(artcAddr) === idx) {
-      const artcAddrCopyArr = [...diaryDto.artcAddrArr];
-      artcAddrCopyArr.splice(idx, 1);
-      setDiaryDto({ ...diaryDto, artcAddrArr: artcAddrCopyArr });
+  const deleteArtcOnClick = (artcAddr: string, artcSeq: string) => {
+    if (diaryDto.artcAddrArr) {
+      for (let i = 0; i < diaryDto.artcAddrArr.length; i++) {
+        if (diaryDto.artcAddrArr[i].artcSeq === artcSeq) {
+          const artcAddrCopyArr = [...diaryDto.artcAddrArr];
+          artcAddrCopyArr[i].useYn = 'N';
+          setDiaryDto({ ...diaryDto, artcAddrArr: artcAddrCopyArr });
+
+          break;
+        }
+      }
     }
   }
 
@@ -184,7 +201,20 @@ export default function Record({ params: { id } }: DiaryType) {
    */
   const updateDiaryOnclick = () => {
     if (window.confirm('수정하시겠습니까?')) {
-
+      fetch('/api/diary/updDiaryItem', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          diaryDto: diaryDto,
+          recSeq: diarySeq
+        }),
+      })
+        .then(() => {
+          alert('수정이 완료되었습니다.');
+        })
     }
   }
 
@@ -193,7 +223,20 @@ export default function Record({ params: { id } }: DiaryType) {
    */
   const deleteDiaryOnclick = () => {
     if (window.confirm('삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.')) {
-      // fetch
+      fetch('/api/diary/delDiaryItem', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          recSeq: diarySeq,
+        }),
+      })
+        .then(() => {
+          alert('삭제가 완료되었습니다');
+          router.push('/diary');
+        })
     }
   }
 
@@ -215,10 +258,10 @@ export default function Record({ params: { id } }: DiaryType) {
       setRecordDt(Today);
       setDiaryDto({ ...diaryDto, date: Today });
     } else {
+      setDiarySeq(id);
       // 수정, 삭제 모드
       if (id.length > 0) {
         setMode('modi');
-        setRecordDt(id);
         // seq 데이터 조회
         getDiaryItem(id);
       } else {
@@ -304,14 +347,16 @@ export default function Record({ params: { id } }: DiaryType) {
         <ul>
           {
             diaryDto.artcAddrArr
-              ? diaryDto.artcAddrArr.map((item: string, idx: number) => (
-                <li key={idx}>
-                  <div className={styles.artcItem}>
-                    <Link href={item} target='_blank'>{item}</Link>
-                    <button type="button" onClick={() => deleteArtcOnClick(item, idx)} >삭제</button>
-                  </div>
-                </li>
-              ))
+              ? diaryDto.artcAddrArr.map((item: DiaryArtcArrType, idx: number) => {
+                if (item.useYn !== 'N') {
+                  return <li key={item.artcSeq + idx}>
+                    <div className={styles.artcItem}>
+                      <Link href={item.artcAddr} target='_blank'>{item.artcAddr}</Link>
+                      <button type="button" onClick={() => deleteArtcOnClick(item.artcAddr, item.artcSeq)} >삭제</button>
+                    </div>
+                  </li>
+                }
+              })
               : null
           }
         </ul>
