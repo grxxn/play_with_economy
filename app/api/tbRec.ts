@@ -205,7 +205,7 @@ export const updateDiaryItem = (recSeq: string, params: DiaryDtoInterface) => {
  * @param artcAddr 
  * @returns 
  */
-export const updateAtrcAddrs = (data: DiaryArtcArrType) => {
+export const updArtcAddrs = (data: DiaryArtcArrType) => {
   const sql = `
     UPDATE  TB_REC_ARTCS  
     SET     ARTC_ADDR = '${data.artcAddr}',
@@ -223,7 +223,7 @@ export const updateAtrcAddrs = (data: DiaryArtcArrType) => {
  * @param artcAddr 
  * @returns 
  */
-export const updNewAtrcAddrs = (recSeq: string, artcAddr: string) => {
+export const updNewArtcAddrs = (recSeq: string, artcAddr: string) => {
   const sql = `
     INSERT INTO TB_REC_ARTCS (
       REC_SEQ,

@@ -191,7 +191,7 @@ export default function Record({ params: { id } }: DiaryType) {
         })
         .catch(error => {
           console.error(error);
-          alert('등록이 실패하였습니다. 잠시 후 다시 시도해주세요.');
+          alert('[ERR: DIR01] 등록이 실패하였습니다. 잠시 후 다시 시도해주세요.');
         });
     }
   }
@@ -215,6 +215,10 @@ export default function Record({ params: { id } }: DiaryType) {
         .then(() => {
           alert('수정이 완료되었습니다.');
         })
+        .catch(error => {
+          console.error(error);
+          alert('[ERR: DIR02] 수정이 실패하였습니다. 잠시 후 다시 시도해주세요.');
+        });
     }
   }
 
@@ -237,6 +241,10 @@ export default function Record({ params: { id } }: DiaryType) {
           alert('삭제가 완료되었습니다');
           router.push('/diary');
         })
+        .catch(error => {
+          console.error(error);
+          alert('[ERR: DIR03] 삭제가 실패하였습니다. 잠시 후 다시 시도해주세요.');
+        });
     }
   }
 

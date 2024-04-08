@@ -11,6 +11,12 @@ interface LoginType {
   rememberMe: boolean;
 }
 
+/**
+ * 로그인 페이지
+ * 
+ * @author yjjeon
+ * @returns 
+ */
 export default function login() {
   // ======================== 변수 선언 ========================
   const [loginInptVal, setLoginInptVal] = useState<LoginType>({ userId: '', userPw: '', rememberMe: false });

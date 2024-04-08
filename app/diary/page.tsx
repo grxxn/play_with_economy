@@ -18,8 +18,8 @@ interface ListItemType {
 /**
  * 다이어리 리스트 페이지
  * 
+ * @author yjjeon 
  * @returns 
- * @author yjjeon
  */
 export default function DiaryList() {
   // ======================== 변수 선언 ========================

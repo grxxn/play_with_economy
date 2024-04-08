@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { insArtcAddrs, updNewAtrcAddrs, updateAtrcAddrs, updateDiaryItem } from "../../tbRec";
+import { updNewArtcAddrs, updArtcAddrs, updateDiaryItem } from "../../tbRec";
 
 /**
  * 다이어리 아이템 수정 API
@@ -16,9 +16,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
     await updateDiaryItem(recSeq as string, body.diaryDto);
     for (let i = 0; i < body.diaryDto.artcAddrArr.length; i++) {
       if (body.diaryDto.artcAddrArr[i].artcSeq.length === 0) {
-        await updNewAtrcAddrs(recSeq, body.diaryDto.artcAddrArr[i].artcAddr);
+        // 수정모드에서 기사 등록 시
+        await updNewArtcAddrs(recSeq, body.diaryDto.artcAddrArr[i].artcAddr);
       } else {
-        await updateAtrcAddrs(body.diaryDto.artcAddrArr[i]);
+        // 기존 기사 
+        await updArtcAddrs(body.diaryDto.artcAddrArr[i]);
       }
     }
 
