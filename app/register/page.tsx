@@ -32,7 +32,7 @@ export default function register() {
    */
   const registerValidation = () => {
     const regexId = /^[a-z0-9](?=.*[a-z])(?=.*\d)[a-z0-9]{5,20}$/;
-    const regexPw = /^[a-z0-9#?!@$%^&*-](?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-])[a-z0-9#?!@$%^&*-]{8,16}$/;
+    const regexPw = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,16}$/;
 
     if (registerDto.id.length === 0) {
       alert('아이디를 입력해 주세요.');
@@ -44,12 +44,12 @@ export default function register() {
       alert('비밀번호 확인을 입력해 주세요.');
       return false;
     } else if (!regexId.test(registerDto.id)) {
-      alert('5~20자의 영문 소문자, 숫자만 사용 가능합니다.');
+      alert('아이디는 5~20자의 영문 소문자, 숫자만 사용 가능합니다.');
       return false;
     } else if (!regexPw.test(registerDto.pw)) {
-      alert('8~16자의 영문, 숫자, 특수문자를 사용해 주세요.');
+      alert('비밀번호는 8~16자의 영문, 숫자, 특수문자를 사용해 주세요.');
       return false;
-    } else if (registerDto.pw === registerDto.pwCheck) {
+    } else if (registerDto.pw !== registerDto.pwCheck) {
       alert('비밀번호 확인이 일치하지 않습니다.');
       return false;
     } else {
@@ -70,23 +70,45 @@ export default function register() {
    * 회원가입 버튼 클릭 이벤트
    */
   const registerBtnOnclick = () => {
+    // 순서: validation -> 아이디 중복확인 -> 회원가입
     if (registerValidation()) {
-      fetch('/api/register', {
+      fetch('api/register/isDupId', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(registerDto)
+        body: JSON.stringify({
+          id: registerDto.id
+        })
       })
-        .then(() => {
-          alert('회원가입이 완료되었습니다. 로그인 후 이용해주세요.');
-          router.push('/login');
+        .then(res => res.json())
+        .then((data) => {
+          if (data.isDupUserId.length > 0) {
+            alert('사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.');
+          } else {
+            fetch('/api/register/signUp', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(registerDto)
+            })
+              .then(() => {
+                alert('회원가입이 완료되었습니다. 로그인 후 이용해 주세요.');
+                router.push('/login');
+              })
+              .catch(error => {
+                console.error(error);
+                alert('[ERR: REG01] 회원가입이 실패하였습니다. 잠시 후 다시 시도해 주세요.');
+              })
+          }
         })
-        .catch(error => {
-          console.error(error);
-          alert('[ERR: REG01] 회원가입이 실패하였습니다. 잠시 후 다시 시도해주세요.')
+        .catch(() => {
+          alert('오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
         })
+
     }
   }
 
