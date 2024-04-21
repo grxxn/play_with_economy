@@ -31,8 +31,9 @@ export default function register() {
    * @returns boolean
    */
   const registerValidation = () => {
-    const regexId = /^[a-z0-9](?=.*[a-z])(?=.*\d)[a-z0-9]{5,20}$/;
+    const regexId = /^[a-z]+[a-z0-9]{5,19}$/g;
     const regexPw = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,16}$/;
+    const specialCheck = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
 
     if (registerDto.id.length === 0) {
       alert('아이디를 입력해 주세요.');
@@ -45,6 +46,9 @@ export default function register() {
       return false;
     } else if (!regexId.test(registerDto.id)) {
       alert('아이디는 5~20자의 영문 소문자, 숫자만 사용 가능합니다.');
+      return false;
+    } else if (specialCheck.test(registerDto.id)) {
+      alert('아이디는 특수문자를 포함할 수 없습니다.');
       return false;
     } else if (!regexPw.test(registerDto.pw)) {
       alert('비밀번호는 8~16자의 영문, 숫자, 특수문자를 사용해 주세요.');
