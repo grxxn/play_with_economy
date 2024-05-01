@@ -1,14 +1,14 @@
 "use client";
 
-interface DiaryType {
-  params: { id: string }
-}
-
 import { useEffect, useState } from 'react';
 import styles from '../components/record.module.scss';
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
+
+interface DiaryType {
+  params: { id: string }
+}
 export interface DiaryDtoInterface {
   date?: string;
   excRatNat?: string;
@@ -30,7 +30,6 @@ export interface DiaryDtoInterface {
   artcAddrArr?: DiaryArtcArrType[];
   recGenrRevw?: string;
 }
-
 export type DiaryArtcArrType = {
   artcSeq: string
   artcAddr: string

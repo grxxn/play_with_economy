@@ -83,7 +83,7 @@ export default function login() {
             localStorage.setItem('userRole', data[0].USER_ROLE);
 
             // 로그인 페이지로 이동
-            router.push('/diary');
+            router.push('/');
           } else {
             alert('아이디 또는 비밀번호가 일치하지 않습니다.');
             setLoginInptVal({ ...loginInptVal, userPw: '' });

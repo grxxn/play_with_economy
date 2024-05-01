@@ -24,7 +24,7 @@ export default function ArticleList() {
    * 네이버 기사 데이터 조회
    */
   const getArticleList = () => {
-    fetch('/v1/search/news.json?query=%EC%A3%BC%EC%8B%9D&display=10&start=1&sort=sim', {
+    fetch('/v1/search/news.json?query=%EC%A3%BC%EC%8B%9D&start=1&sort=sim', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export default function ArticleList() {
     })
       .then(res => res.json())
       .then(data => {
-        setArtcList(data.items);
+        if (data.items) setArtcList(data.items);
       })
   }
 
@@ -45,37 +45,53 @@ export default function ArticleList() {
     getArticleList();
   }, [])
 
+
   return (
     <div className={styles.container}>
-      <div className={styles.articleListHeader}>
-        <h1>
-          <Link href={'/'}>경제야 놀자</Link>
-        </h1>
-        <button type="button">
-          로그아웃
-        </button>
-      </div>
-
-      <div className={styles.articleList}>
-        {
-          artcList.length > 0
-            ?
+      {
+        artcList.length > 0
+          ? <>
             <table>
+              <colgroup>
+                <col width={'80%'} />
+                <col width={'20%'} />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>제목</th>
+                  <th>게시일</th>
+                </tr>
+              </thead>
               <tbody>
                 {
-                  artcList.map((item) => (
-                    <tr key={item.title}>
-                      <td>{item.title}</td>
-                      <td>{item.description}</td>?
+                  artcList.map((item, idx) => (
+                    <tr key={idx}>
+                      <td>
+                        <a href={item.link} target='_blank'>
+                          <p dangerouslySetInnerHTML={{ __html: item.title }} className={styles.newTitl}></p>
+                          <p dangerouslySetInnerHTML={{ __html: item.description }} className={styles.newsDesc}></p>
+                        </a>
+                      </td>
+                      {/* <td dangerouslySetInnerHTML={{ __html: item.description }}></td> */}
+                      <td className={styles.newDt}>
+                        {new Date(item.pubDate).getFullYear() + '.'
+                          + (new Date(item.pubDate).getMonth() + 1) + '.'
+                          + new Date(item.pubDate).getDate()}
+                      </td>
                     </tr>
                   ))
                 }
               </tbody>
             </table>
+            <div className={styles.paginationBox}>
+              <button type="button" className={styles.prevBtn}>&lt;</button>
+              <button type="button" className={styles.nextBtn}>&gt;</button>
+            </div>
+          </>
 
-            : null
-        }
-      </div>
+
+          : null
+      }
     </div>
   )
 }

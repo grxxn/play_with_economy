@@ -1,23 +1,67 @@
 .container {
-  padding: 67px 88px;
+  padding: 20px 88px;
   color: #fff;
 
-  .articleListHeader {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 48px;
+  &>table {
+    border-collapse: collapse;
+    margin-bottom: 24px;
 
-    &>h1 {
-      color: #06B03F;
-      font-weight: 900;
+    &>thead {
+      background-color: #ccc;
+      color: #000;
+
+      &>tr>th {
+        padding: 5px 0;
+        font-size: 13px;
+      }
     }
 
+    &>tbody>tr>td {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 7px;
+      padding-left: 15px;
+
+      &>a {
+        .newTitl {
+          margin-bottom: 4px;
+        }
+
+        .newsDesc {
+          width: 80%;
+          font-size: 13px;
+          color: #777;
+          line-height: 19px;
+        }
+      }
+
+
+    }
+
+    .newDt {
+      text-align: center;
+      font-size: 13px;
+    }
+
+  }
+
+  &>.paginationBox {
+
     &>button {
-      width: auto;
-      height: auto;
-      padding: 0 10px;
-      background-color: transparent;
-      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      border-radius: 0;
+      background-color: #2f2f2f;
+      color: #ccc;
+
+      &:first-of-type {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+
+      &:last-of-type {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
     }
   }
 }

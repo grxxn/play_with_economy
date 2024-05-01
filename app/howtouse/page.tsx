@@ -10,7 +10,7 @@ export default function howToUse() {
           <h1>
             <Link href={'/'}>경제야 놀자</Link>
           </h1>
-          <p>경제야 놀자 사용 설명서</p>
+          <p>다이어리 사용 설명서</p>
           <p>
             경제야 놀자에 오신 여러분 환영합니다!<br />
             경제에 관심은 있지만 어떻게 시작해야 할 지 모르시겠나요?<br /><br />

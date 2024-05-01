@@ -38,16 +38,6 @@ export default function DiaryList() {
 
   // ======================== 이벤트 선언 ========================
 
-  /**
-   * 로그아웃 버튼 클릭 이벤트
-   */
-  const logoutOnClick = () => {
-    // 로그아웃 -> 첫 페이지로 이동 + localStorage 로그인정보 삭제
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('userRole');
-    window.location.href = '/';
-  }
-
 
   useEffect(() => {
     // 로그인 데이터 확인
@@ -62,15 +52,10 @@ export default function DiaryList() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.diaryListHeader}>
-        <h1>
-          <Link href={'/'}>경제야 놀자</Link>
-        </h1>
-        <button onClick={logoutOnClick}>
-          로그아웃
-        </button>
+      <div className={styles.diaryGuide}>
+        <Link href={'/howtouse'}>가이드 보러가기</Link>
+        <Link href={'/diary/record'}>기록하기</Link>
       </div>
-
       <div className={styles.cardWrapper}>
         {
           listData && listData.length > 0
@@ -88,10 +73,6 @@ export default function DiaryList() {
             : null
         }
       </div>
-
-      <button type='button'>
-        <Link href={'/diary/record'}>기록하기</Link>
-      </button>
     </div>
   )
 }

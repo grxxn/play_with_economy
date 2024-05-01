@@ -1,32 +1,19 @@
 .container {
-  padding: 67px 88px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 40px 0;
 
-  .diaryListHeader {
+  .diaryGuide {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 48px;
-
-    &>h1 {
-      color: #06B03F;
-      font-weight: 900;
-    }
-
-    &>button {
-      width: auto;
-      height: auto;
-      padding: 0 10px;
-      background-color: transparent;
-      cursor: pointer;
-    }
-  }
-
-  &>button {
-    width: 280px;
-    border-radius: 15px;
-    float: right;
+    margin-bottom: 22px;
 
     &>a {
-      line-height: 50px;
+      color: #fff;
     }
   }
 
@@ -34,7 +21,7 @@
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(4, 270px);
-    gap: 40px;
-    margin-bottom: 50px;
+    gap: 30px;
+    // margin-bottom: 50px;
   }
 }
