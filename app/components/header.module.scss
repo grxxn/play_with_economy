@@ -1,0 +1,20 @@
+.headerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  background-color: #ffffff;
+
+  &>h1 {
+    font-size: 20px;
+  }
+
+  &>a {
+    position: absolute;
+    right: 30px;
+    color: #000;
+    line-height: 40px;
+    font-size: 13px;
+    padding: 0 20px;
+  }
+}
