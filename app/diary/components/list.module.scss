@@ -8,11 +8,13 @@
 
   .diaryGuide {
     width: 100%;
+    max-width: 1170px;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 22px;
+    margin-bottom: 24px;
 
-    &>a {
+    &>button {
+      background-color: #5fbb48;
       color: #fff;
     }
   }

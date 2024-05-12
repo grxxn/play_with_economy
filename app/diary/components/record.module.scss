@@ -14,7 +14,7 @@
     padding: 10px;
 
     &:focus {
-      outline: 2px solid #06B03F;
+      outline: 2px solid #5fbb48;
     }
   }
 
@@ -51,7 +51,7 @@
           padding: 3px 10px;
 
           &:focus {
-            border-color: #06B03F;
+            border-color: #5fbb48;
           }
         }
       }
@@ -173,7 +173,7 @@
 
     button:first-of-type {
       background-color: #fff;
-      color: #06B03F;
+      color: #5fbb48;
 
       &>a {
         line-height: 50px;

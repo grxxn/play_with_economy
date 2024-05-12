@@ -4,7 +4,6 @@ import styles from './components/list.module.scss';
 import DiaryCard from "./components/DiaryCard";
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { cookies } from 'next/headers';
 
 interface ListItemType {
   recSeq: string;
@@ -53,8 +52,12 @@ export default function DiaryList() {
   return (
     <div className={styles.container}>
       <div className={styles.diaryGuide}>
-        <Link href={'/howtouse'}>가이드 보러가기</Link>
-        <Link href={'/diary/record'}>기록하기</Link>
+        <button type='button'>
+          <Link href={'/howtouse'}>가이드 보러가기</Link>
+        </button>
+        <button type='button'>
+          <Link href={'/diary/record'}>기록하기</Link>
+        </button>
       </div>
       <div className={styles.cardWrapper}>
         {

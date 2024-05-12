@@ -119,37 +119,36 @@ export default function register() {
 
   return (
     <div className={styles.container}>
-      <h1>
-        <Link href={'/'}>경제야 놀자</Link>
-      </h1>
-      <h3>회원가입</h3>
-      <div className={styles.registerWrapper}>
-        <input
-          type="text"
-          name='id'
-          placeholder='아이디'
-          value={registerDto.id}
-          onChange={regiInptOnChange}
-        />
-        <input
-          type="password"
-          name='pw'
-          placeholder='비밀번호'
-          value={registerDto.pw}
-          onChange={regiInptOnChange}
-        />
-        <input
-          type="password"
-          name='pwCheck'
-          placeholder='비밀번호 확인'
-          value={registerDto.pwCheck}
-          onChange={regiInptOnChange}
-        />
+      <div className={styles.registerBox}>
+        <h3>회원가입</h3>
+        <div className={styles.registerFormWrapper}>
+          <input
+            type="text"
+            name='id'
+            placeholder='아이디'
+            value={registerDto.id}
+            onChange={regiInptOnChange}
+          />
+          <input
+            type="password"
+            name='pw'
+            placeholder='비밀번호'
+            value={registerDto.pw}
+            onChange={regiInptOnChange}
+          />
+          <input
+            type="password"
+            name='pwCheck'
+            placeholder='비밀번호 확인'
+            value={registerDto.pwCheck}
+            onChange={regiInptOnChange}
+          />
+        </div>
+        <button
+          type='submit'
+          className={styles.submitBtn}
+          onClick={registerBtnOnclick}>회원가입</button>
       </div>
-      <button
-        type='submit'
-        className={styles.submitBtn}
-        onClick={registerBtnOnclick}>회원가입</button>
     </div>
   )
 }

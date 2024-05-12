@@ -1,4 +1,4 @@
-import { DiaryArtcArrType, DiaryDtoInterface } from './../diary/[id]/page';
+import { DiaryArtcArrType, DiaryDtoInterface } from '../diary/[id]/page';
 import { selectSQL } from "../_lib/db";
 
 export interface TbRecInterface {

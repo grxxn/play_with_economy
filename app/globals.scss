@@ -6,9 +6,9 @@
 
 body,
 html {
-  background-color: #000;
   width: 100%;
   height: 100%;
+  background-color: #f9fafb;
 }
 
 h2,
@@ -18,7 +18,7 @@ h5,
 h6,
 p,
 label {
-  color: #fff;
+  // color: #fff;
 }
 
 a {
@@ -36,7 +36,11 @@ button {
   background: none;
   cursor: pointer;
   font-size: 14px;
-  color: #fff;
+  color: #5fbb48;
+  font-size: 12px;
+  padding: 8px 20px;
+  border: 1px solid #5fbb48;
+  border-radius: .625rem;
 }
 
 textarea {
@@ -44,5 +48,5 @@ textarea {
 }
 
 input:focus {
-  outline: 1px solid #06B03F;
+  outline: 1px solid #5fbb48;
 }

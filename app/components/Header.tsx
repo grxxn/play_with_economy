@@ -44,7 +44,7 @@ const Header = () => {
         <Link href={'/'}>💸 경제야 놀자 💸</Link>
       </h1>
       <div className={styles.gnb}>
-        <Link href={'/'}>놀자</Link>
+        {/* <Link href={'/'}>놀자</Link> */}
         <Link href={'/diary'}>쓰자</Link>
         <Link href={'/'}>하자</Link>
         <Link href={'/article'}>보자</Link>

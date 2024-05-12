@@ -6,48 +6,59 @@
   justify-content: center;
   align-items: center;
 
-  &>h1 {
-    color: #06B03F;
-    margin-bottom: 7px;
-  }
-
-  &>h3 {
-    font-size: 24px;
-    margin-bottom: 70px;
-  }
-
-  .registerWrapper {
+  .registerBox {
+    width: 570px;
+    height: 600px;
+    background-color: #fff;
+    border-radius: 3rem;
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, .12);
+    -webkit-box-shadow: 10px 10px 40px rgba(0, 0, 0, .12);
+    -moz-box-shadow: 10px 10px 40px rgba(0, 0, 0, .12);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    label {
-      font-size: 15px;
-      margin-bottom: 10px;
+    &>h3 {
+      font-size: 24px;
+      margin-bottom: 70px;
     }
 
-    input {
+    .registerFormWrapper {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-size: 15px;
+        margin-bottom: 10px;
+      }
+
+      input {
+        width: 434px;
+        height: 40px;
+        border: 1px solid #cdd2d4;
+        border-radius: .625rem;
+        padding: 0 20px;
+
+        &:not(:last-child) {
+          margin-bottom: 20px;
+        }
+
+        &:last-child {
+          margin-bottom: 67px;
+        }
+
+        &:focus {
+          outline: 1px solid #5fbb48;
+        }
+      }
+    }
+
+    .submitBtn {
       width: 434px;
-      height: 40px;
-      border: none;
-      border-radius: 14px;
-      padding: 0 20px;
-
-      &:not(:last-child) {
-        margin-bottom: 20px;
-      }
-
-      &:last-child {
-        margin-bottom: 67px;
-      }
-
-      &:focus {
-        outline: 2px solid #06B03F;
-      }
+      background-color: #5fbb48;
+      color: #fff;
+      padding: 10px 20px;
     }
-  }
-
-  .submitBtn {
-    width: 320px;
-    border-radius: 21px;
   }
 }

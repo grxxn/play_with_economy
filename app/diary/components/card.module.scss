@@ -5,6 +5,9 @@
   border-radius: 15px;
   background-color: #fff;
   padding: 24px 27px;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, .12);
+  -webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, .12);
+  -moz-box-shadow: 5px 5px 20px rgba(0, 0, 0, .12);
 
   &>h3 {
     color: #000;
