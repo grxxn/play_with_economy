@@ -57,6 +57,7 @@ export default function DiaryList() {
         </button>
         <button type='button'>
           <Link href={'/diary/record'}>기록하기</Link>
+
         </button>
       </div>
       <div className={styles.cardWrapper}>

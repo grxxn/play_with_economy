@@ -8,7 +8,7 @@
 
   .diaryGuide {
     width: 100%;
-    max-width: 1170px;
+    max-width: 1090px;
     display: flex;
     justify-content: space-between;
     margin-bottom: 24px;
@@ -22,7 +22,7 @@
   .cardWrapper {
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(4, 270px);
+    grid-template-columns: repeat(4, 250px);
     gap: 30px;
     // margin-bottom: 50px;
   }

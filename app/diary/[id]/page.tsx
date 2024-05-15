@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
 
-interface DiaryType {
+interface DiarParamsType {
   params: { id: string }
 }
 export interface DiaryDtoInterface {
@@ -42,7 +42,7 @@ export type DiaryArtcArrType = {
  * @author yjjeon
  * @returns 
  */
-export default function Record({ params: { id } }: DiaryType) {
+export default function Record({ params: { id } }: DiarParamsType) {
   // ======================== 변수 선언 ========================
 
   const [mode, setMode] = useState<string>('');
@@ -58,7 +58,7 @@ export default function Record({ params: { id } }: DiaryType) {
 
   /**
    * seq가 있을 경우 상세 조회
-   * @param recSeq 
+   * @param recSeq
    */
   const getDiaryItem = (recSeq: string) => {
     fetch(`/api/diary/getDiaryItem?recSeq=${recSeq}`)
@@ -154,8 +154,8 @@ export default function Record({ params: { id } }: DiaryType) {
 
   /**
    * 기사 삭제 버튼 클릭 이벤트
-   * @param artcAddr 
-   * @param idx 
+   * @param artcAddr
+   * @param idx
    */
   const deleteArtcOnClick = (artcAddr: string, artcSeq: string) => {
     if (diaryDto.artcAddrArr) {
