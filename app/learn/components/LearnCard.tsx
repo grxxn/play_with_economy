@@ -10,6 +10,11 @@ import Link from "next/link";
  * @returns 
  */
 export default function LearnCard() {
+  // ======================== 변수 선언 ========================
+
+  // ======================== 함수 선언 ========================
+
+  // ======================== 이벤트 선언 ========================
 
   return (
     <Link className={styles.cardContainer} href={'/learn/1'}>

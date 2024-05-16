@@ -1,0 +1,83 @@
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 100px 40px 60px;
+
+  .editorWrapper {
+    width: 100%;
+    display: grid;
+    gap: 20px 0;
+    grid-template-columns: 100px 1fr;
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, .12);
+    -webkit-box-shadow: 10px 10px 40px rgba(0, 0, 0, .12);
+    -moz-box-shadow: 10px 10px 40px rgba(0, 0, 0, .12);
+    font-size: 13px;
+    padding: 30px 40px;
+
+    label {
+      padding-left: 10px;
+      height: 36px;
+      line-height: 36px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      border: none;
+      border-bottom: 1px solid #999999;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    input[type=date] {
+      max-width: 200px;
+    }
+
+    textarea {
+      resize: none;
+      padding: 22px;
+      min-height: 500px;
+      grid-column: 1/3;
+      border-radius: 1rem;
+      border-color: #999999;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .buttonWrapper {
+      grid-column: 1/3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+
+      &>div {
+        &>button {
+          background-color: #5fbb48;
+          color: #fff;
+        }
+
+        &>button:not(:last-of-type) {
+          margin-right: 10px;
+        }
+      }
+
+      .backBtn {
+        background-color: #fff;
+        color: #5fbb48;
+      }
+
+      .deleteBtn {
+        border-color: #d24c2b;
+        background-color: #d24c2b;
+        color: #fff;
+      }
+    }
+  }
+}
