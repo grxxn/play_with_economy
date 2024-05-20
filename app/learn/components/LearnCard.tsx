@@ -1,6 +1,5 @@
-import Image from "next/image";
 import styles from "./card.module.scss";
-import learnCardImg from "/app/server/images/10_KakaoTalk_Photo_2024-05-18-15-45-22_001.jpeg";
+import Image from "next/image";
 import Link from "next/link";
 
 export type LearnCardType = {

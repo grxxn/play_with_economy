@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
 import styles from '../components/learnDetail.module.scss';
+import { useEffect, useState } from 'react';
+import Image from "next/image";
 import Link from 'next/link';
 
 type LearnParamsType = {
@@ -28,7 +29,8 @@ export type LrnDetailDtoType = {
  */
 export default function LearnDetail({ params: { id } }: LearnParamsType) {
   // ======================== 변수 선언 ========================
-  const [lrnDetailDto, setLrnDetailDto] = useState<LrnDetailDtoType>();
+  const [isAdmin, setIsAdmin] = useState<boolean>();
+  const [lrnDetailDto, setLrnDetailDto] = useState<LrnDetailDtoType>({});
 
   // ======================== 함수 선언 ========================
   const getLrnDetail = (seq: string) => {
@@ -51,7 +53,20 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
   }
 
   // ======================== 이벤트 선언 ========================
+
+  /**
+   * 삭제 버튼 클릭 이벤트
+   */
+  const delBtnClickHandler = () => {
+    if (confirm('게시글을 삭제하시겠습니까?')) {
+      console.log('삭제')
+    }
+  }
+
   useEffect(() => {
+    const userRole = localStorage.getItem('userRole');
+    setIsAdmin(userRole && userRole.indexOf('ADMIN') > -1 ? true : false);
+
     getLrnDetail(id);
   }, [])
 
@@ -60,15 +75,32 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
       <button type='button' className={styles.backBtn}>
         <Link href={'/learn'}>&lt; 목록으로</Link>
       </button>
-      <h2>{lrnDetailDto?.lrnBardTitl}</h2>
+      {
+        isAdmin
+          ? <div className={styles.btnGroup}>
+            <button type='button'>수정</button>
+            <button type='button' onClick={delBtnClickHandler}>삭제</button>
+          </div>
+          : null
+      }
+      <h2>{lrnDetailDto.lrnBardTitl}</h2>
       <p className={styles.subTitl}>
-        {lrnDetailDto?.lrnBardSubTitl}
+        {lrnDetailDto.lrnBardSubTitl}
       </p>
-      <span className={styles.regDt}>{lrnDetailDto?.regDt}</span>
+      <span className={styles.regDt}>{lrnDetailDto.regDt}</span>
 
       <div className={styles.conts}>
-        <img src={lrnDetailDto?.lrnBardThumPath} alt="썸네일 이미지" />
-        <p>{lrnDetailDto?.lrnBardCont}</p>
+        {
+          lrnDetailDto.lrnBardThumPath
+            ? <Image
+              src={require(`/app/server/images/${lrnDetailDto.lrnBardThumPath}`)}
+              alt='thumbnail image'
+              width={258}
+              height={221}
+            />
+            : null
+        }
+        <pre>{lrnDetailDto.lrnBardCont}</pre>
       </div>
     </div>
   )
