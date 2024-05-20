@@ -33,8 +33,9 @@
       }
     }
 
-    input[type=date] {
+    input[type=file] {
       max-width: 200px;
+      border: none;
     }
 
     textarea {
@@ -61,6 +62,7 @@
         &>button {
           background-color: #5fbb48;
           color: #fff;
+          min-width: 100px;
         }
 
         &>button:not(:last-of-type) {

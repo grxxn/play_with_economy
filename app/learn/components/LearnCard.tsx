@@ -1,7 +1,16 @@
 import Image from "next/image";
 import styles from "./card.module.scss";
-import learnCardImg from "../../../public/assets/images/learn1.jpg";
+import learnCardImg from "/app/server/images/10_KakaoTalk_Photo_2024-05-18-15-45-22_001.jpeg";
 import Link from "next/link";
+
+export type LearnCardType = {
+  lrnBardSeq: string
+  lrnBardTitl: string
+  lrnBardSubTitl: string
+  lrnBardThumPath: string
+  regDt: string
+  updDt?: string
+}
 
 /**
  * 학습 카드 컴포넌트
@@ -9,7 +18,7 @@ import Link from "next/link";
  * @author yjjeon
  * @returns 
  */
-export default function LearnCard() {
+export default function LearnCard({ lrnBardSeq, lrnBardTitl, lrnBardSubTitl, lrnBardThumPath, regDt }: LearnCardType) {
   // ======================== 변수 선언 ========================
 
   // ======================== 함수 선언 ========================
@@ -17,13 +26,13 @@ export default function LearnCard() {
   // ======================== 이벤트 선언 ========================
 
   return (
-    <Link className={styles.cardContainer} href={'/learn/1'}>
+    <Link className={styles.cardContainer} href={'/learn/' + lrnBardSeq}>
       <div className={styles.imgBox}>
-        <Image src={learnCardImg} alt="썸네일 이미지" />
+        <Image src={require(`/app/server/images/${lrnBardThumPath}`)} alt="썸네일 이미지" width={258} height={221} />
       </div>
-      <h3>금리란 무엇일까요?</h3>
-      <p>금리에 대한 기본상식부터 알아보자!</p>
-      <p>2024.05.15</p>
+      <h3>{lrnBardTitl}</h3>
+      <p>{lrnBardSubTitl}</p>
+      <p>{regDt}</p>
     </Link>
   )
 }

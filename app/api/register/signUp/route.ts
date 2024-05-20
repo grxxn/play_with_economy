@@ -10,7 +10,6 @@ import { insUserData } from "../../tbUser";
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const body = await req.json();
-    console.log(body)
 
     await insUserData(body);
     return new NextResponse(null, {
