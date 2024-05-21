@@ -74,7 +74,7 @@ export default function LearnCardList() {
       {
         isAdmin
           ? <button type="button" className={styles.goEditBtn}>
-            <Link href={'/learn/write'}>글쓰기</Link>
+            <Link href={'/learn/write?mode=add'}>글쓰기</Link>
           </button>
           : null
       }

@@ -2,7 +2,7 @@ import { selectSQL } from "../_lib/db"
 import { LrnDetailDtoType } from "../learn/[id]/page";
 
 /**
- * Learn 게시판 리스트 조회
+ * Learn 게시판 리스트 조회 쿼리
  * @returns 
  */
 export const getLrnBardList = (currItemCnt: number) => {
@@ -23,7 +23,7 @@ export const getLrnBardList = (currItemCnt: number) => {
 }
 
 /**
- * Learn 게시판 글 갯수 조회
+ * Learn 게시판 글 갯수 조회 쿼리
  * @returns 
  */
 export const getLrnBardTotAmt = () => {
@@ -37,7 +37,7 @@ export const getLrnBardTotAmt = () => {
 }
 
 /**
- * Learn 게시글 상세 조회
+ * Learn 게시글 상세 조회 쿼리
  * @returns 
  */
 export const getLrnDetail = (seq: string) => {
@@ -56,7 +56,7 @@ export const getLrnDetail = (seq: string) => {
 }
 
 /**
- * Learn 게시글 최근 SEQ 조회
+ * Learn 게시글 최근 SEQ 조회 쿼리
  * @returns 
  */
 export const getLrnLatestSeq = () => {
@@ -71,7 +71,7 @@ export const getLrnLatestSeq = () => {
 }
 
 /**
- * Learn 게시글 등록
+ * Learn 게시물 등록 쿼리
  * @param params 
  * @returns 
  */
@@ -92,6 +92,36 @@ export const insLrnItem = (params: LrnDetailDtoType) => {
       CURRENT_TIMESTAMP,
       '${params.regSeq}'
     )
+  `;
+
+  return selectSQL(sql);
+}
+
+/**
+ * learn 게시물 수정 쿼리
+ * @param params 
+ * @returns 
+ */
+export const updLrnItem = (params: LrnDetailDtoType) => {
+  const sql = `
+    UPDATE  TB_LRN_BARD
+    SET     LRN_BARD_TITL = '${params.lrnBardTitl}',
+            LRN_BARD_SUB_TITL = '${params.lrnBardSubTitl}',
+            LRN_BARD_CONT = '${params.lrnBardCont}',
+            LRN_BARD_THUM_PATH = '${params.lrnBardThumPath}',
+            UPD_DT = CURRENT_TIMESTAMP
+            UPD_SEQ = '${params.updSeq}'
+    WHERE   LRN_BARD_SEQ = ${params.lrnBardSeq}
+  `;
+
+  return selectSQL(sql);
+}
+
+export const delLrnItem = (lrnBardSeq: string) => {
+  const sql = `
+    UPDATE  TB_LRN_BARD
+    SET     USE_YN = 'N'
+    WHERE   LRN_BARD_SEQ = ${lrnBardSeq}
   `;
 
   return selectSQL(sql);

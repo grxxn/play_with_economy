@@ -4,6 +4,7 @@ import styles from '../components/learnDetail.module.scss';
 import { useEffect, useState } from 'react';
 import Image from "next/image";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 type LearnParamsType = {
   params: { id: string };
@@ -32,6 +33,8 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
   const [isAdmin, setIsAdmin] = useState<boolean>();
   const [lrnDetailDto, setLrnDetailDto] = useState<LrnDetailDtoType>({});
 
+  const router = useRouter();
+
   // ======================== 함수 선언 ========================
   const getLrnDetail = (seq: string) => {
     fetch('/api/learn/getLearnItem', {
@@ -59,7 +62,21 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
    */
   const delBtnClickHandler = () => {
     if (confirm('게시글을 삭제하시겠습니까?')) {
-      console.log('삭제')
+      fetch('/api/learn/delLearnItem', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          lrnBardSeq: id
+        })
+      })
+        .then(res => res.json())
+        .then((data) => {
+          alert(data.message);
+          router.push('/learn');
+        })
     }
   }
 
@@ -78,7 +95,9 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
       {
         isAdmin
           ? <div className={styles.btnGroup}>
-            <button type='button'>수정</button>
+            <button type='button'>
+              <Link href={'/learn/write?mode=modi'}>수정</Link>
+            </button>
             <button type='button' onClick={delBtnClickHandler}>삭제</button>
           </div>
           : null

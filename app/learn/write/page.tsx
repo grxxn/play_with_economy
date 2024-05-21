@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from '../components/write.module.scss';
 import Link from 'next/link';
 import { LrnDetailDtoType } from '../[id]/page';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 /**
  * 게시글 작성 화면
@@ -18,6 +18,7 @@ export default function Write() {
   const [lrnDetailDto, setLrnDetailDto] = useState<LrnDetailDtoType>({});
 
   const router = useRouter();
+  const urlParams = useSearchParams();
 
   // ======================== 함수 선언 ========================
 
@@ -70,6 +71,9 @@ export default function Write() {
 
   // ======================== 이벤트 선언 ========================
 
+  useEffect(() => {
+    setIsAddMode(urlParams.get('mode') === 'add')
+  }, [])
 
   return (
     <div className={styles.container}>
