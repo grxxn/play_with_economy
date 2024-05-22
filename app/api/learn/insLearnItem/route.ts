@@ -49,7 +49,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       `${imgStoragePath}/${fileNm}`,
       buffer
     );
-    formData.set("lrnBardThumPath", '/app/server/images/' + fileNm);
+    formData.set("lrnBardThumPath", fileNm);
 
     const lrnDetailDto = {
       lrnBardTitl: formData.get("lrnBardTitl") as string,

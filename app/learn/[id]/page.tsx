@@ -96,7 +96,7 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
         isAdmin
           ? <div className={styles.btnGroup}>
             <button type='button'>
-              <Link href={'/learn/write?mode=modi'}>수정</Link>
+              <Link href={`/learn/write?mode=modi&seq=${id}`}>수정</Link>
             </button>
             <button type='button' onClick={delBtnClickHandler}>삭제</button>
           </div>

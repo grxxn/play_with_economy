@@ -15,12 +15,44 @@ import { useRouter, useSearchParams } from 'next/navigation';
 export default function Write() {
   // ======================== 변수 선언 ========================
   const [isAddmode, setIsAddMode] = useState<boolean>(true);
+  const [isNewThum, setIsNewThum] = useState<boolean>(false);
   const [lrnDetailDto, setLrnDetailDto] = useState<LrnDetailDtoType>({});
+  const [newThumImgNm, setNewThumImgNm] = useState<string>('');
 
   const router = useRouter();
   const urlParams = useSearchParams();
 
   // ======================== 함수 선언 ========================
+
+  /**
+   * 수정모드에서 아이템 데이터 조회
+   */
+  const getLearnItemInfo = () => {
+    const seq = urlParams.get('seq');
+
+    if (seq) {
+      fetch('/api/learn/getLearnItem', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          lrnBardSeq: seq
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          setLrnDetailDto(data[0]);
+        })
+    } else {
+      alert('ERR C001: 데이터 조회 실패. 잠시 후 다시 시도해주세요.');
+      router.push(`/learn`);
+    }
+  }
+
+
+  // ======================== 이벤트 선언 ========================
 
   /**
    * input change 이벤트
@@ -69,11 +101,45 @@ export default function Write() {
       })
   }
 
-  // ======================== 이벤트 선언 ========================
+  /**
+   * 수정 버튼 클릭 이벤트
+   */
+  const modiBtnClickHandler = () => {
+    const seq = urlParams.get('seq');
+
+    console.log(lrnDetailDto)
+    // fetch('', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     lrnBardSeq: seq
+    //   })
+    // })
+  }
+
+  /**
+   * 새로운 썸네일 등록 버튼 클릭 이벤트
+   */
+  const setNewThumChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    if (e.target.files && e.target.files.length > 0) {
+      setNewThumImgNm(e.target.files[0].name);
+      setLrnDetailDto({ ...lrnDetailDto, lrnThumFileInfo: e.target.files[0] });
+    }
+  }
 
   useEffect(() => {
     setIsAddMode(urlParams.get('mode') === 'add')
   }, [])
+
+  useEffect(() => {
+    if (!isAddmode) {
+      getLearnItemInfo();
+    }
+  }, [isAddmode])
 
   return (
     <div className={styles.container}>
@@ -83,6 +149,7 @@ export default function Write() {
           type="text"
           name="lrnBardTitl"
           placeholder='제목을 입력해주세요'
+          value={lrnDetailDto.lrnBardTitl || ''}
           onChange={inptChangeHandler}
         />
         <label>부제목</label>
@@ -90,17 +157,36 @@ export default function Write() {
           type="text"
           name='lrnBardSubTitl'
           placeholder='제목을 입력해주세요'
+          value={lrnDetailDto.lrnBardSubTitl || ''}
           onChange={inptChangeHandler}
         />
         <label>썸네일</label>
-        <input
-          type='file'
-          name='lrnBardThumPath'
-          onChange={thumbFileChangeHandler}
-        />
+        {
+          isAddmode
+            ? <input
+              type='file'
+              name='lrnThumFileInfo'
+              onChange={thumbFileChangeHandler}
+            />
+            : <div className={styles.newThumBox}>
+              <label htmlFor='newThumPath' onClick={() => setIsNewThum(true)}>새로운 썸네일 등록하기</label>
+              <input
+                type='file'
+                id='newThumPath'
+                name='lrnThumFileInfo'
+                onChange={setNewThumChangeHandler}
+              />
+              {
+                !isNewThum
+                  ? <span>({lrnDetailDto.lrnBardThumPath})</span>
+                  : <span>({newThumImgNm})</span>
+              }
+            </div>
+        }
         <textarea
           placeholder='내용을 입력해주세요'
           name='lrnBardCont'
+          value={lrnDetailDto.lrnBardCont || ''}
           onChange={inptChangeHandler}
         />
         <div className={styles.buttonWrapper}>
@@ -112,10 +198,7 @@ export default function Write() {
             {
               isAddmode
                 ? <button type='button' onClick={submitBtnClickHandler}>작성</button>
-                : <>
-                  <button type='button'>수정</button>
-                  <button type='button' className={styles.deleteBtn}>삭제</button>
-                </>
+                : <button type='button' onClick={modiBtnClickHandler}>수정</button>
             }
           </div>
         </div>

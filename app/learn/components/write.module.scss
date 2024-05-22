@@ -51,6 +51,27 @@
       }
     }
 
+    .newThumBox {
+
+      &>label {
+        color: #5fbb48;
+
+        &:hover {
+          font-weight: 600;
+        }
+      }
+
+      &>input {
+        display: none;
+      }
+
+      &>span {
+        display: inline-block;
+        margin-left: 10px;
+        color: #999999;
+      }
+    }
+
     .buttonWrapper {
       grid-column: 1/3;
       display: flex;
