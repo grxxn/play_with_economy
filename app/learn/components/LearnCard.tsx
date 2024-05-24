@@ -19,6 +19,7 @@ export type LearnCardType = {
  */
 export default function LearnCard({ lrnBardSeq, lrnBardTitl, lrnBardSubTitl, lrnBardThumPath, regDt }: LearnCardType) {
   // ======================== 변수 선언 ========================
+  const imgSrc = require(`/app/server/images/${lrnBardThumPath}`);
 
   // ======================== 함수 선언 ========================
 
@@ -27,7 +28,12 @@ export default function LearnCard({ lrnBardSeq, lrnBardTitl, lrnBardSubTitl, lrn
   return (
     <Link className={styles.cardContainer} href={'/learn/' + lrnBardSeq}>
       <div className={styles.imgBox}>
-        <Image src={require(`/app/server/images/${lrnBardThumPath}`)} alt="썸네일 이미지" width={258} height={221} />
+        <Image
+          src={imgSrc}
+          alt="썸네일 이미지"
+          layout='fill'
+          objectFit='contain'
+        />
       </div>
       <h3>{lrnBardTitl}</h3>
       <p>{lrnBardSubTitl}</p>

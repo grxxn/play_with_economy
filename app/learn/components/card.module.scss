@@ -11,7 +11,9 @@
   cursor: pointer;
 
   .imgBox {
-    margin-bottom: 10px;
+    position: relative;
+    width: 258px;
+    height: 221px;
 
     &>img {
       width: auto;
@@ -21,6 +23,7 @@
   }
 
   &>h3 {
+    margin-top: 10px;
     margin-bottom: 4px;
     font-size: 18px;
   }

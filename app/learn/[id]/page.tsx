@@ -109,16 +109,18 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
       <span className={styles.regDt}>{lrnDetailDto.regDt}</span>
 
       <div className={styles.conts}>
-        {
-          lrnDetailDto.lrnBardThumPath
-            ? <Image
-              src={require(`/app/server/images/${lrnDetailDto.lrnBardThumPath}`)}
-              alt='thumbnail image'
-              width={258}
-              height={221}
-            />
-            : null
-        }
+        <div className={styles.imgBox}>
+          {
+            lrnDetailDto.lrnBardThumPath
+              ? <Image
+                src={require(`/app/server/images/${lrnDetailDto.lrnBardThumPath}`)}
+                alt='thumbnail image'
+                layout='fill'
+                objectFit='contain'
+              />
+              : null
+          }
+        </div>
         <pre>{lrnDetailDto.lrnBardCont}</pre>
       </div>
     </div>

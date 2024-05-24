@@ -43,6 +43,7 @@ export default function Write() {
       })
         .then(res => res.json())
         .then(data => {
+          data[0].lrnBardSeq = seq;
           setLrnDetailDto(data[0]);
         })
     } else {
@@ -105,19 +106,31 @@ export default function Write() {
    * 수정 버튼 클릭 이벤트
    */
   const modiBtnClickHandler = () => {
-    const seq = urlParams.get('seq');
+    const formData = new FormData();
+    const userSeq = localStorage.getItem('accessToken');
 
-    console.log(lrnDetailDto)
-    // fetch('', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     lrnBardSeq: seq
-    //   })
-    // })
+    formData.append('lrnBardSeq', lrnDetailDto.lrnBardSeq ? lrnDetailDto.lrnBardSeq : '');
+    formData.append('lrnBardTitl', lrnDetailDto.lrnBardTitl ? lrnDetailDto.lrnBardTitl : '');
+    formData.append('lrnBardSubTitl', lrnDetailDto.lrnBardSubTitl ? lrnDetailDto.lrnBardSubTitl : '');
+    formData.append('lrnBardCont', lrnDetailDto.lrnBardCont ? lrnDetailDto.lrnBardCont : '');
+    formData.append('lrnBardThumPath', lrnDetailDto.lrnBardThumPath ? lrnDetailDto.lrnBardThumPath : '');
+    formData.append('lrnThumImgfile', lrnDetailDto.lrnThumFileInfo ? lrnDetailDto.lrnThumFileInfo : '');
+    formData.append('updSeq', userSeq && userSeq.length > 0 ? userSeq : '')
+
+
+    fetch('/api/learn/updLearnItem', {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.statusText === 'Success') {
+          alert('게시글이 수정되었습니다.');
+          router.push(`/learn/${lrnDetailDto.lrnBardSeq}`);
+        } else {
+          alert(data.message);
+        }
+      })
   }
 
   /**
@@ -127,7 +140,7 @@ export default function Write() {
 
     if (e.target.files && e.target.files.length > 0) {
       setNewThumImgNm(e.target.files[0].name);
-      setLrnDetailDto({ ...lrnDetailDto, lrnThumFileInfo: e.target.files[0] });
+      setLrnDetailDto({ ...lrnDetailDto, lrnThumFileInfo: e.target.files[0], lrnBardThumPath: '' });
     }
   }
 
@@ -137,6 +150,7 @@ export default function Write() {
 
   useEffect(() => {
     if (!isAddmode) {
+      // 수정모드
       getLearnItemInfo();
     }
   }, [isAddmode])

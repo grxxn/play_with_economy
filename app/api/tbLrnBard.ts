@@ -109,8 +109,8 @@ export const updLrnItem = (params: LrnDetailDtoType) => {
             LRN_BARD_SUB_TITL = '${params.lrnBardSubTitl}',
             LRN_BARD_CONT = '${params.lrnBardCont}',
             LRN_BARD_THUM_PATH = '${params.lrnBardThumPath}',
+            UPD_SEQ = '${params.updSeq}',
             UPD_DT = CURRENT_TIMESTAMP
-            UPD_SEQ = '${params.updSeq}'
     WHERE   LRN_BARD_SEQ = ${params.lrnBardSeq}
   `;
 

@@ -2,8 +2,6 @@ import formidable from "formidable";
 import fs from "node:fs/promises";
 import path from "path";
 import { NextApiRequest, NextApiResponse } from "next";
-import { IncomingForm } from "formidable";
-import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { getLrnLatestSeq, insLrnItem } from "../../tbLrnBard";
 
