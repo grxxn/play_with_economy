@@ -16,7 +16,8 @@
     align-items: center;
     justify-content: center;
     background-color: #fff;
-    width: 95%;
+    width: 1000px;
+    max-width: 1000px;
     border-radius: 3rem;
     box-shadow: 10px 10px 40px rgba(0, 0, 0, .12);
     -webkit-box-shadow: 10px 10px 40px rgba(0, 0, 0, .12);
@@ -40,24 +41,62 @@
     p {
       color: #9c9c9c;
       text-align: center;
-      margin-bottom: 60px;
+      margin-bottom: 40px;
     }
 
     button {
       border-radius: 4.5625rem;
       font-size: 14px;
       padding: 10px 29px;
+      margin-bottom: 80px;
 
       &:hover {
         background-color: #5fbb48;
         color: #fff;
       }
     }
+
+    .mainDescImgBox {
+      width: 80%;
+      height: 500px;
+      max-height: 500px;
+      position: relative;
+      background-image: url('../public/assets/images/macbook-bg.png');
+      background-size: contain;
+      background-position: center center;
+      background-repeat: no-repeat;
+
+      &>p {
+        margin-top: -10px;
+      }
+
+      &>div {
+        width: 614px;
+        height: 380px;
+        overflow-y: scroll;
+        position: absolute;
+        top: 9%;
+        left: 50%;
+        transform: translateX(-50%);
+        -ms-overflow-style: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        &>img {
+          width: 100%;
+        }
+      }
+    }
   }
 
-  .section1 {
+  .section1,
+  .section2,
+  .section3 {
     background-color: #fff;
-    width: 95%;
+    width: 1000px;
+    max-width: 1000px;
     border-radius: 3rem;
     box-shadow: 10px 10px 40px rgba(0, 0, 0, .12);
     -webkit-box-shadow: 10px 10px 40px rgba(0, 0, 0, .12);
@@ -65,7 +104,25 @@
     color: #474747;
     text-align: center;
     padding: 50px 0;
+    margin-bottom: 30px;
+
+    &>h2 {
+      margin-bottom: 23px;
+      font-size: 18px;
+      font-weight: 300;
+      letter-spacing: 0.005rem;
+      color: #494949;
+
+
+      &>b {
+        font-size: 23px;
+        margin-left: 4px;
+      }
+    }
   }
 
+  .section2 {}
+
+  .section3 {}
 
 }

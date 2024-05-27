@@ -71,39 +71,41 @@ export default function LearnCardList() {
 
   return (
     <div className={styles.container}>
-      {
-        isAdmin
-          ? <button type="button" className={styles.goEditBtn}>
-            <Link href={'/learn/write?mode=add'}>글쓰기</Link>
-          </button>
-          : null
-      }
-
-      <InfiniteScroll
-        pageStart={0}
-        loadMore={getLrnBard}
-        hasMore={learnCardList.length !== totAmt}
-        className={styles.cardList}
-      >
+      <div className={styles.lrnListWrapper}>
         {
-          learnCardList.map(item => (
-            <LearnCard
-              key={item.lrnBardSeq}
-              lrnBardSeq={item.lrnBardSeq}
-              lrnBardTitl={item.lrnBardTitl}
-              lrnBardSubTitl={item.lrnBardSubTitl}
-              lrnBardThumPath={item.lrnBardThumPath}
-              regDt={item.regDt}
-            />
-          ))
+          isAdmin
+            ? <button type="button" className={styles.goEditBtn}>
+              <Link href={'/learn/write?mode=add'}>글쓰기</Link>
+            </button>
+            : null
         }
-      </InfiniteScroll>
 
-      <button
-        type="button"
-        className={styles.moveUpBtn}
-        onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }) }}
-      >🔝</button>
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={getLrnBard}
+          hasMore={learnCardList.length !== totAmt}
+          className={styles.cardList}
+        >
+          {
+            learnCardList.map(item => (
+              <LearnCard
+                key={item.lrnBardSeq}
+                lrnBardSeq={item.lrnBardSeq}
+                lrnBardTitl={item.lrnBardTitl}
+                lrnBardSubTitl={item.lrnBardSubTitl}
+                lrnBardThumPath={item.lrnBardThumPath}
+                regDt={item.regDt}
+              />
+            ))
+          }
+        </InfiniteScroll>
+
+        <button
+          type="button"
+          className={styles.moveUpBtn}
+          onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }) }}
+        >🔝</button>
+      </div>
     </div>
   )
 }
