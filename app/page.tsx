@@ -20,7 +20,7 @@ export default function Home() {
         <div className={styles.mainDescImgBox}>
           <p>화면 속에서 스크롤 해보세요!</p>
           <div>
-            <img src='/assets/images/testimg.png' alt="dd" />
+            <img src='/assets/images/playwitheconomy_info.jpg' alt="dd" />
           </div>
         </div>
       </div>

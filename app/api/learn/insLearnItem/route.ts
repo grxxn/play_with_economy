@@ -1,4 +1,3 @@
-import formidable from "formidable";
 import fs from "node:fs/promises";
 import path from "path";
 import { NextApiRequest, NextApiResponse } from "next";
