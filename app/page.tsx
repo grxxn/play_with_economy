@@ -27,15 +27,16 @@ export default function Home() {
 
       <div className={styles.section1}>
         {/* <p>🏃‍♀️‍➡️경제를 놀이처럼, 제태크에 대해 얘기를 나눌 수 있는 '놀자'</p> */}
-        <h2>📝 경제 다이러리를 작성하여 오늘의 경제 상황을 살펴볼 수 있는 <b>'쓰자'</b></h2>
+        <h2>📝 경제 다이러리를 작성하여 오늘의 경제 상황을 살펴볼 수 있는 <b>&apos;쓰자&apos;</b></h2>
+
       </div>
 
       <div className={styles.section2}>
-        <h2>💁‍♀️ 경제 초보도 괜찮아. 경제 기초상식부터 알려주는 <b>'하자'</b></h2>
+        <h2>💁‍♀️ 경제 초보도 괜찮아. 경제 기초상식부터 알려주는 <b>&apos;하자&apos;</b></h2>
       </div>
 
       <div className={styles.section3}>
-        <h2>🔎 날마다 올라오는 경제 기사, 모아보기 귀찮다면 경제 기사를 볼 수 있는 <b>'보자'</b></h2>
+        <h2>🔎 날마다 올라오는 경제 기사, 모아보기 귀찮다면 경제 기사를 볼 수 있는 <b>&apos;보자&apos;</b></h2>
 
       </div>
     </div>

@@ -4,11 +4,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import { getLrnLatestSeq, insLrnItem } from "../../tbLrnBard";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  }
-}
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   }
+// }
 
 /**
  * Learn 아이템 등록 API

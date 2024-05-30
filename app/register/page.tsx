@@ -18,7 +18,7 @@ type registerDtoType = {
  * @author yjjeon
  * @returns 
  */
-export default function register() {
+export default function Register() {
   // ======================== 변수 선언 ========================
   const [registerDto, setRegisterDto] = useState<registerDtoType>({ id: '', pw: '', pwCheck: '' });
 

@@ -15,7 +15,13 @@ const nextConfig = {
         destination: 'https://openapi.naver.com/v1/:path*',
       },
     ]
-  }
+  },
+
+  assetPrefix: process.env.NODE_ENV !== 'production'
+   ? 'https://grxxn.github.io/play_with_economy'
+   : "",
+
+   basePath: "/play_with_economy"
 };
 
 module.exports = nextConfig;

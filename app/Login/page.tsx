@@ -17,7 +17,7 @@ interface LoginType {
  * @author yjjeon
  * @returns 
  */
-export default function login() {
+export default function Login() {
   // ======================== 변수 선언 ========================
   const [loginInptVal, setLoginInptVal] = useState<LoginType>({ userId: '', userPw: '', rememberMe: false });
   const pwInptRef = useRef<HTMLInputElement>(null);
