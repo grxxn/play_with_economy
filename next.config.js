@@ -21,7 +21,7 @@ const nextConfig = {
    ? 'https://grxxn.github.io/play_with_economy'
    : "",
 
-   basePath: "/play_with_economy"
+   basePath: process.env.NODE_ENV === 'production' ? "/play_with_economy" : ""
 };
 
 module.exports = nextConfig;
