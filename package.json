@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "https://openapi.naver.com",
-  "homepage": "https://grxxn.github.io/play_with_economy",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
