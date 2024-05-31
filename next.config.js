@@ -16,13 +16,6 @@ const nextConfig = {
       },
     ]
   },
-
-  assetPrefix: process.env.NODE_ENV !== 'production'
-   ? 'https://grxxn.github.io/play_with_economy'
-   : "",
-
-   basePath: process.env.NODE_ENV === 'production' ? "https://grxxn.github.io/play_with_economy/" : "",
-   output: 'export'
 };
 
 module.exports = nextConfig;

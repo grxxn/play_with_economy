@@ -6,17 +6,12 @@
   "homepage": "https://grxxn.github.io/play_with_economy",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "predeploy": "npm run build",
-    "deploy": "next build && next export && touch out/.nojekyll && git add -f out/ && git commit -m 'deploy to main' && git subtree push --prefix out origin main"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@types/formidable": "^3.4.5",
     "@types/react-infinite-scroller": "^1.2.5",
-    "formidable": "^3.5.1",
-    "gh-pages": "^6.1.1",
     "mysql2": "^3.9.1",
     "next": "14.1.0",
     "react": "^18",
