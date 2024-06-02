@@ -72,15 +72,13 @@ export default function Login() {
         },
         body: JSON.stringify(loginInptVal)
       })
-        .then(res => {
-          return res.json()
-        })
+        .then(res => res.json())
         .then(data => {
-          if (data.length > 0) {
+          if (data.data.length > 0) {
             // localStorage에 로그인 데이터 저장
-            localStorage.setItem('accessToken', data[0].USER_SEQ);
-            localStorage.setItem('userId', data[0].USER_ID);
-            localStorage.setItem('userRole', data[0].USER_ROLE);
+            localStorage.setItem('accessToken', data.data[0].USER_SEQ);
+            localStorage.setItem('userId', data.data[0].USER_ID);
+            localStorage.setItem('userRole', data.data[0].USER_ROLE);
 
             // 로그인 페이지로 이동
             router.push('/');

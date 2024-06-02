@@ -75,45 +75,49 @@ export default function Register() {
    */
   const registerBtnOnclick = () => {
     // 순서: validation -> 아이디 중복확인 -> 회원가입
-    if (registerValidation()) {
-      fetch('api/register/isDupId', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: registerDto.id
-        })
+    // if (registerValidation()) {
+    fetch('api/register/isDupId', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: registerDto.id
       })
-        .then(res => res.json())
-        .then((data) => {
-          if (data.isDupUserId.length > 0) {
-            alert('사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.');
-          } else {
-            fetch('/api/register/signUp', {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(registerDto)
-            })
-              .then(() => {
+    })
+      .then(res => res.json())
+      .then((data) => {
+        if (data.isDupUserId.length > 0) {
+          alert('사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.');
+        } else {
+          fetch('/api/register/signUp', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(registerDto)
+          })
+            .then(res => res.json())
+            .then((data) => {
+              if (data && data.statusText === 'Success') {
                 alert('회원가입이 완료되었습니다. 로그인 후 이용해 주세요.');
                 router.push('/login');
-              })
-              .catch(error => {
-                console.error(error);
+              } else {
                 alert('[ERR: REG01] 회원가입이 실패하였습니다. 잠시 후 다시 시도해 주세요.');
-              })
-          }
-        })
-        .catch(() => {
-          alert('오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
-        })
+              }
+            })
+            .catch(error => {
+              alert('[ERR: REG01] 회원가입이 실패하였습니다. 잠시 후 다시 시도해 주세요.');
+            })
+        }
+      })
+      .catch(() => {
+        alert('오류가 발생하였습니다. 잠시 후 다시 시도해 주세요.');
+      })
 
-    }
+    // }
   }
 
 

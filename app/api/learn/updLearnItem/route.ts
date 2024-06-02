@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { updLrnItem } from "../../tbLrnBard";
 import fs from "node:fs/promises";
 import path from "path";
+import { sql } from "@vercel/postgres";
 
 /**
  * Learn 게시글 수정 API
@@ -11,50 +12,51 @@ import path from "path";
  */
 export async function POST(req: NextRequest, res: NextResponse) {
 
-  const formData = await req.formData();
+  try {
 
-  // 썸네일을 새로 추가한 경우 이미지 새로 등록
-  const lrnBardThumPath = formData.get('lrnBardThumPath') as string;
-  console.log(lrnBardThumPath)
-  if (lrnBardThumPath.length === 0) {
+    const formData = await req.formData();
 
-    const lrnSeq = formData.get('lrnBardSeq');
-    const imgStoragePath = path.join(
-      process.cwd() + "/app" + "/server" + "/images"
-    );
-    const file = formData.get("lrnThumImgfile") as File;
+    // 썸네일을 새로 추가한 경우 이미지 새로 등록
+    const lrnBardThumPath = formData.get('lrnBardThumPath') as string;
 
-    if (!file) return NextResponse.json({
-      status: 400,
-      statusText: 'Failed',
-      message: "ERR S001: 수정 실패. 잠시 후 다시 시도해주세요."
-    });
+    if (lrnBardThumPath.length === 0) {
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    let fileNm = file.name.replaceAll(" ", "_");
-    fileNm = lrnSeq + "_" + fileNm;
-
-    // local 폴더에 이미지 저장
-    try {
-
-      await fs.writeFile(
-        `${imgStoragePath}/${fileNm}`,
-        buffer
+      const lrnSeq = formData.get('lrnBardSeq');
+      const imgStoragePath = path.join(
+        process.cwd() + "/app" + "/server" + "/images"
       );
-      formData.set("lrnBardThumPath", fileNm);
+      const file = formData.get("lrnThumImgfile") as File;
 
-    } catch (err) {
-
-      return NextResponse.json({
+      if (!file) return NextResponse.json({
         status: 400,
         statusText: 'Failed',
         message: "ERR S001: 수정 실패. 잠시 후 다시 시도해주세요."
       });
+
+      const buffer = Buffer.from(await file.arrayBuffer());
+      let fileNm = file.name.replaceAll(" ", "_");
+      fileNm = lrnSeq + "_" + fileNm;
+
+      // local 폴더에 이미지 저장
+      try {
+
+        await fs.writeFile(
+          `${imgStoragePath}/${fileNm}`,
+          buffer
+        );
+        formData.set("lrnBardThumPath", fileNm);
+
+      } catch (err) {
+
+        return NextResponse.json({
+          status: 400,
+          statusText: 'Failed',
+          message: "ERR S001: 수정 실패. 잠시 후 다시 시도해주세요."
+        });
+      }
+
     }
 
-  }
-
-  try {
     const lrnDetailDto = {
       lrnBardSeq: formData.get("lrnBardSeq") as string,
       lrnBardTitl: formData.get("lrnBardTitl") as string,
@@ -64,20 +66,33 @@ export async function POST(req: NextRequest, res: NextResponse) {
       updSeq: formData.get("updSeq") as string
     }
 
-    await updLrnItem(lrnDetailDto);
+    // await updLrnItem(lrnDetailDto);
+    await sql`
+      UPDATE  "TB_LRN_BARD"
+      SET     "LRN_BARD_TITL" = ${lrnDetailDto.lrnBardTitl},
+              "LRN_BARD_SUB_TITL" = ${lrnDetailDto.lrnBardSubTitl},
+              "LRN_BARD_CONT" = ${lrnDetailDto.lrnBardCont},
+              "LRN_BARD_THUM_PATH" = ${lrnDetailDto.lrnBardThumPath},
+              "UPD_SEQ" = ${lrnDetailDto.updSeq},
+              "UPD_DT" = CURRENT_TIMESTAMP
+      WHERE   "LRN_BARD_SEQ" = ${lrnDetailDto.lrnBardSeq}
+    `;
 
     return NextResponse.json({
       status: 200,
       statusText: "Success",
       message: "수정이 완료되었습니다."
     });
+
   } catch (err) {
-    console.log("Error occured ", err);
+
     return NextResponse.json({
       status: 400,
       statusText: 'Failed',
       message: "ERR S001: 수정 실패. 잠시 후 다시 시도해주세요."
     });
+
   }
+
 
 }

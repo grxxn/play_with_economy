@@ -1,3 +1,4 @@
+import { createPool } from '@vercel/postgres';
 import mysql from 'mysql2/promise';
 
 const pool = mysql.createPool({
@@ -6,6 +7,9 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB
 });
+// const pool = createPool({
+//   connectionString: process.env.POSTGRES_URL,
+// })
 
 // SQL SELECT FNC
 export const selectSQL = async (sqlQuery: string) => {

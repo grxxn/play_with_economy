@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDupUserId, insUserData } from "../../tbUser";
 import { RowDataPacket } from "mysql2";
+import { sql } from "@vercel/postgres";
 
 
 /**
@@ -12,13 +13,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const body = await req.json();
 
-    const isDupUserId = await getDupUserId(body);
-    return NextResponse.json({ isDupUserId: isDupUserId });
+    const { rows } = await sql`SELECT "USER_ID" as "isDupUserId"
+                              FROM "TB_USER"
+                              WHERE "USER_ID" = ${body.id}`;
+
+    return NextResponse.json({ isDupUserId: rows });
 
   } catch (err) {
-    return new NextResponse(null, {
+    return NextResponse.json({
       status: 400,
-      statusText: "Bad Request"
+      statusText: 'Failed',
+      message: "ERR S001: 중복 확인 실패. 잠시 후 다시 시도해주세요."
     });
   }
 }

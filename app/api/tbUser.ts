@@ -1,4 +1,6 @@
 import { selectSQL } from "../_lib/db";
+import { sql } from "@vercel/postgres";
+
 
 export interface TbUserInterface {
   seq: string;
@@ -14,17 +16,14 @@ export interface TbUserInterface {
  * @param userPw 
  * @returns 
  */
-export const getUserData = (userId: string, userPw: string) => {
-  const sql = `
-    SELECT USER_SEQ
-          , USER_ID
-          , USER_ROLE
-    FROM TB_USER
-    WHERE USER_ID = '${userId}'
-      AND USER_PW = '${userPw}'
-  `;
+export const getUserData = (id: string, pw: string) => {
 
-  return selectSQL(sql);
+  return sql`SELECT "USER_SEQ"
+                , "USER_ID"
+                , "USER_ROLE"
+              FROM "TB_USER"
+              WHERE "USER_ID" = ${'id'}
+              AND "USER_PW" = ${'pw'}`;
 }
 
 /**
@@ -33,21 +32,20 @@ export const getUserData = (userId: string, userPw: string) => {
  * @returns 
  */
 export const insUserData = (data: { id: string, pw: string }) => {
-  const sql = `
-    INSERT INTO TB_USER (
-      USER_ID,
-      USER_PW,
-      USER_ROLE,
-      REG_DT
+
+  return sql`
+    INSERT INTO "TB_USER" (
+      "USER_ID",
+      "USER_PW",
+      "USER_ROLE",
+      "REG_DT"
     ) VALUES (
-      '${data.id}',
-      '${data.pw}',
+      '` + data.id + `',
+      '` + data.pw + `',
       'USER',
       CURRENT_TIMESTAMP
     )
   `;
-
-  return selectSQL(sql);
 }
 
 /**
@@ -56,11 +54,10 @@ export const insUserData = (data: { id: string, pw: string }) => {
  * @returns 
  */
 export const getDupUserId = (data: { id: string }) => {
-  const sql = `
-    SELECT USER_ID
-    FROM TB_USER
-    WHERE USER_ID = '${data.id}'
-  `;
 
-  return selectSQL(sql);
+  return sql`
+    SELECT "USER_ID" as "isDupUserId"
+    FROM "TB_USER"
+    WHERE "USER_ID" = '${data.id}'
+  `;
 }

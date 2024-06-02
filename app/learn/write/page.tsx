@@ -42,9 +42,13 @@ export default function Write() {
         })
       })
         .then(res => res.json())
-        .then(data => {
-          data[0].lrnBardSeq = seq;
-          setLrnDetailDto(data[0]);
+        .then(res => {
+          if (res.status === 200 && res.data) {
+            res.data.lrnBardSeq = seq;
+            setLrnDetailDto(res.data);
+          } else {
+            alert('ERR LRN002: 데이터 조회 실패. 잠시 후 다시 시도해주세요.');
+          }
         })
     } else {
       alert('ERR C001: 데이터 조회 실패. 잠시 후 다시 시도해주세요.');
@@ -92,8 +96,8 @@ export default function Write() {
       body: formData
     })
       .then(res => res.json())
-      .then(data => {
-        if (data.message === "Success") {
+      .then(res => {
+        if (res.statusText === "Success") {
           alert('게시글이 등록되었습니다.');
           router.push('/learn');
         } else {

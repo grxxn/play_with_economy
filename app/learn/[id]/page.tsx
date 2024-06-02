@@ -48,9 +48,9 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
       })
     })
       .then(res => res.json())
-      .then(data => {
-        if (data.length > 0) {
-          setLrnDetailDto(data[0]);
+      .then(res => {
+        if (res.data) {
+          setLrnDetailDto(res.data);
         }
       })
   }
@@ -73,8 +73,8 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
         })
       })
         .then(res => res.json())
-        .then((data) => {
-          alert(data.message);
+        .then(res => {
+          alert(res.message);
           router.push('/learn');
         })
     }
