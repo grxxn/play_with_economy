@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { RowDataPacket } from "mysql2";
 import { sql } from "@vercel/postgres";
 
 
