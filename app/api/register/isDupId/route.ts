@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDupUserId, insUserData } from "../../tbUser";
 import { RowDataPacket } from "mysql2";
 import { sql } from "@vercel/postgres";
 

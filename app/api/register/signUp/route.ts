@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { insUserData } from "../../tbUser";
 import { sql } from "@vercel/postgres";
 
 
@@ -34,11 +33,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
 
   } catch (err) {
-    console.error(err);
+
     return NextResponse.json({
       status: 400,
       statusText: 'Failed',
       message: "ERR S002: 회원가입 실패. 잠시 후 다시 시도해주세요."
     });
+
   }
 }

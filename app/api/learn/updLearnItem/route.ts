@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { updLrnItem } from "../../tbLrnBard";
 import fs from "node:fs/promises";
 import path from "path";
 import { sql } from "@vercel/postgres";
@@ -66,7 +65,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
       updSeq: formData.get("updSeq") as string
     }
 
-    // await updLrnItem(lrnDetailDto);
     await sql`
       UPDATE  "TB_LRN_BARD"
       SET     "LRN_BARD_TITL" = ${lrnDetailDto.lrnBardTitl},

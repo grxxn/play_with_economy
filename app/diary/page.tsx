@@ -32,7 +32,13 @@ export default function DiaryList() {
   const getListData = (userSeq: string) => {
     fetch(`/api/diary/getDiaryList?userSeq=${userSeq}`)
       .then(res => res.json())
-      .then(data => setListData(data));
+      .then(res => {
+        if (res.status === 200) {
+          setListData(res.data);
+        } else {
+          alert(res.message);
+        }
+      });
   }
 
   // ======================== 이벤트 선언 ========================

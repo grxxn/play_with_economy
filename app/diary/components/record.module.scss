@@ -192,9 +192,12 @@
       display: flex;
       justify-content: space-between;
 
-      &>button:first-of-type {
+      &>button {
         color: #fff;
         background-color: #5fbb48;
+      }
+
+      &>button:first-of-type {
         padding: 0;
 
         &>a {

@@ -2,7 +2,6 @@ import fs from "node:fs/promises";
 import path from "path";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
-import { getLrnLatestSeq, insLrnItem } from "../../tbLrnBard";
 import { sql } from "@vercel/postgres";
 
 // export const config = {
@@ -21,7 +20,6 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
 
   try {
     // 이미지 파일 이름에 SEQ 추가
-    // const latestSeqRes = await getLrnLatestSeq();
     const { rows } = await sql`SELECT ("LRN_BARD_SEQ" + 1) as "latestSeq"
                               FROM "TB_LRN_BARD"
                               ORDER BY "LRN_BARD_SEQ" DESC
@@ -84,7 +82,6 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
           ${lrnDetailDto.regSeq}
         )
       `;
-      // await insLrnItem(lrnDetailDto);
 
       return NextResponse.json({
         status: 200,

@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUserData } from "../tbUser";
 import { cookies } from "next/headers";
 import { sql } from "@vercel/postgres";
 

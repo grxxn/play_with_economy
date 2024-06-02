@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { delLrnItem } from "../../tbLrnBard";
 import { sql } from "@vercel/postgres";
 
 /**
@@ -14,7 +13,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const body = await req.json();
     const seq = body.lrnBardSeq;
 
-    // await delLrnItem(seq);
     await sql`
       UPDATE  "TB_LRN_BARD"
       SET     "USE_YN" = 'N'

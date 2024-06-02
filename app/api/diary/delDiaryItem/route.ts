@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { deleteDiaryItem } from "../../tbRec";
+import { sql } from "@vercel/postgres";
 
 /**
  * 다이어리 아이템 삭제 API
@@ -8,10 +8,32 @@ import { deleteDiaryItem } from "../../tbRec";
  * @returns 
  */
 export async function POST(req: NextRequest, res: NextResponse) {
-  const body = await req.json();
-  const recSeq = body.recSeq;
 
-  const data = await deleteDiaryItem(recSeq as string);
+  try {
 
-  return NextResponse.json(data);
+    const body = await req.json();
+    const recSeq = body.recSeq;
+
+    await sql`
+      UPDATE  "TB_REC"
+      SET     "USE_YN" = 'N'
+      WHERE   "REC_SEQ" = ${recSeq}
+    `;
+
+    return NextResponse.json({
+      status: 200,
+      statusText: "Success",
+      message: "게시물 삭제가 완료되었습니다."
+    });
+
+  } catch (err) {
+
+    return NextResponse.json({
+      status: 400,
+      statusText: "Failed",
+      message: "ERR S001: 게시물 삭제 실패. 잠시 후 다시 시도해주세요."
+    });
+
+  }
+
 }
