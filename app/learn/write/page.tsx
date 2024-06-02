@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import styles from '../components/write.module.scss';
 import Link from 'next/link';
 import { LrnDetailDtoType } from '../[id]/page';
@@ -160,67 +160,69 @@ export default function Write() {
   }, [isAddmode])
 
   return (
-    <div className={styles.container}>
-      <div className={styles.editorWrapper}>
-        <label>제목</label>
-        <input
-          type="text"
-          name="lrnBardTitl"
-          placeholder='제목을 입력해주세요'
-          value={lrnDetailDto.lrnBardTitl || ''}
-          onChange={inptChangeHandler}
-        />
-        <label>부제목</label>
-        <input
-          type="text"
-          name='lrnBardSubTitl'
-          placeholder='제목을 입력해주세요'
-          value={lrnDetailDto.lrnBardSubTitl || ''}
-          onChange={inptChangeHandler}
-        />
-        <label>썸네일</label>
-        {
-          isAddmode
-            ? <input
-              type='file'
-              name='lrnThumFileInfo'
-              onChange={thumbFileChangeHandler}
-            />
-            : <div className={styles.newThumBox}>
-              <label htmlFor='newThumPath' onClick={() => setIsNewThum(true)}>새로운 썸네일 등록하기</label>
-              <input
+    <Suspense>
+      <div className={styles.container}>
+        <div className={styles.editorWrapper}>
+          <label>제목</label>
+          <input
+            type="text"
+            name="lrnBardTitl"
+            placeholder='제목을 입력해주세요'
+            value={lrnDetailDto.lrnBardTitl || ''}
+            onChange={inptChangeHandler}
+          />
+          <label>부제목</label>
+          <input
+            type="text"
+            name='lrnBardSubTitl'
+            placeholder='제목을 입력해주세요'
+            value={lrnDetailDto.lrnBardSubTitl || ''}
+            onChange={inptChangeHandler}
+          />
+          <label>썸네일</label>
+          {
+            isAddmode
+              ? <input
                 type='file'
-                id='newThumPath'
                 name='lrnThumFileInfo'
-                onChange={setNewThumChangeHandler}
+                onChange={thumbFileChangeHandler}
               />
+              : <div className={styles.newThumBox}>
+                <label htmlFor='newThumPath' onClick={() => setIsNewThum(true)}>새로운 썸네일 등록하기</label>
+                <input
+                  type='file'
+                  id='newThumPath'
+                  name='lrnThumFileInfo'
+                  onChange={setNewThumChangeHandler}
+                />
+                {
+                  !isNewThum
+                    ? <span>({lrnDetailDto.lrnBardThumPath})</span>
+                    : <span>({newThumImgNm})</span>
+                }
+              </div>
+          }
+          <textarea
+            placeholder='내용을 입력해주세요'
+            name='lrnBardCont'
+            value={lrnDetailDto.lrnBardCont || ''}
+            onChange={inptChangeHandler}
+          />
+          <div className={styles.buttonWrapper}>
+            <button type='button' className={styles.backBtn}>
+              <Link href={'/learn'}>목록으로</Link>
+            </button>
+
+            <div>
               {
-                !isNewThum
-                  ? <span>({lrnDetailDto.lrnBardThumPath})</span>
-                  : <span>({newThumImgNm})</span>
+                isAddmode
+                  ? <button type='button' onClick={submitBtnClickHandler}>작성</button>
+                  : <button type='button' onClick={modiBtnClickHandler}>수정</button>
               }
             </div>
-        }
-        <textarea
-          placeholder='내용을 입력해주세요'
-          name='lrnBardCont'
-          value={lrnDetailDto.lrnBardCont || ''}
-          onChange={inptChangeHandler}
-        />
-        <div className={styles.buttonWrapper}>
-          <button type='button' className={styles.backBtn}>
-            <Link href={'/learn'}>목록으로</Link>
-          </button>
-
-          <div>
-            {
-              isAddmode
-                ? <button type='button' onClick={submitBtnClickHandler}>작성</button>
-                : <button type='button' onClick={modiBtnClickHandler}>수정</button>
-            }
           </div>
         </div>
       </div>
-    </div>
+    </Suspense>
   )
 }
