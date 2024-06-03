@@ -4,6 +4,7 @@ import styles from './components/list.module.scss';
 import DiaryCard from "./components/DiaryCard";
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface ListItemType {
   recSeq: string;
@@ -23,6 +24,8 @@ interface ListItemType {
 export default function DiaryList() {
   // ======================== 변수 선언 ========================
   const [listData, setListData] = useState<ListItemType[]>();
+
+  const router = useRouter();
 
   // ======================== 함수 선언 ========================
 
@@ -51,7 +54,7 @@ export default function DiaryList() {
       getListData(accessToken);
     } else {
       alert('로그인 후 이용 가능합니다.');
-      window.location.href = '/login';
+      router.push('/login');
     }
   }, [])
 
