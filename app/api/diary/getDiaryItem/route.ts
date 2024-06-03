@@ -7,11 +7,12 @@ import { NextRequest, NextResponse } from "next/server";
  * @param res 
  * @returns 
  */
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
 
   try {
 
-    const seq = req.nextUrl.searchParams.get("recSeq");
+    const body = await req.json();
+    const seq = parseInt(body.recSeq);
 
     const { rows } = await sql`
       SELECT "EXC_RAT_NAT"		as "excRatNat"
