@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './header.module.scss';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 /**
  * Header component 
@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 const Header = () => {
   // ======================== 변수 선언 ========================
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const pathName = usePathname();
   const router = useRouter();
 
   // ======================== 함수 선언 ========================
@@ -40,7 +41,7 @@ const Header = () => {
     const accessToken = localStorage.getItem('accessToken');
 
     if (accessToken && accessToken.length > 0) setIsLogin(true);
-  }, [isLogin])
+  }, [pathName])
 
   return (
     <header className={styles.headerWrapper}>
