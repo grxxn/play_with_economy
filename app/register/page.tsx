@@ -99,12 +99,16 @@ export default function Register() {
               },
               body: JSON.stringify(registerDto)
             })
-              .then(() => {
-                alert('회원가입이 완료되었습니다. 로그인 후 이용해 주세요.');
-                router.push('/login');
+              .then(res => res.json())
+              .then((data) => {
+                if (data && data.statusText === 'Success') {
+                  alert('회원가입이 완료되었습니다. 로그인 후 이용해 주세요.');
+                  router.push('/login');
+                } else {
+                  alert('[ERR: REG01] 회원가입이 실패하였습니다. 잠시 후 다시 시도해 주세요.');
+                }
               })
               .catch(error => {
-                console.error(error);
                 alert('[ERR: REG01] 회원가입이 실패하였습니다. 잠시 후 다시 시도해 주세요.');
               })
           }

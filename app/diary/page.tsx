@@ -4,6 +4,7 @@ import styles from './components/list.module.scss';
 import DiaryCard from "./components/DiaryCard";
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface ListItemType {
   recSeq: string;
@@ -24,15 +25,32 @@ export default function DiaryList() {
   // ======================== 변수 선언 ========================
   const [listData, setListData] = useState<ListItemType[]>();
 
+  const router = useRouter();
+
   // ======================== 함수 선언 ========================
 
   /**
    * 다이어리 리스트 조회
    */
   const getListData = (userSeq: string) => {
-    fetch(`/api/diary/getDiaryList?userSeq=${userSeq}`)
+    fetch('/api/diary/getDiaryList', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userSeq: userSeq
+      })
+    })
       .then(res => res.json())
-      .then(data => setListData(data));
+      .then(res => {
+        if (res.status === 200) {
+          setListData(res.data);
+        } else {
+          alert(res.message);
+        }
+      });
   }
 
   // ======================== 이벤트 선언 ========================
@@ -45,7 +63,7 @@ export default function DiaryList() {
       getListData(accessToken);
     } else {
       alert('로그인 후 이용 가능합니다.');
-      window.location.href = '/login';
+      router.push('/login');
     }
   }, [])
 

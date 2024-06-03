@@ -10,6 +10,7 @@ interface DiarParamsType {
   params: { id: string }
 }
 export interface DiaryDtoInterface {
+  userSeq?: string;
   date?: string;
   excRatNat?: string;
   excRatVal?: string;
@@ -61,12 +62,28 @@ export default function Record({ params: { id } }: DiarParamsType) {
    * @param recSeq
    */
   const getDiaryItem = (recSeq: string) => {
-    fetch(`/api/diary/getDiaryItem?recSeq=${recSeq}`)
+    fetch('/api/diary/getDiaryItem', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        recSeq: recSeq
+      })
+    })
       .then(res => res.json())
-      .then(data => {
-        if (data.artcArr.length > 0) data.diaryData[0].artcAddrArr = data.artcArr;
-        setDiaryDto(data.diaryData[0]);
-        setRecordDt(data.diaryData[0].regDt);
+      .then(res => {
+        if (res.status === 200) {
+          if (res.data.artcArr.length > 0) res.data.diaryData.artcAddrArr = res.data.artcArr;
+
+          res.data.diaryData.recGenrRevw = res.data.diaryData.recGenrRevw.replaceAll('<br/>', '\n');
+
+          setDiaryDto(res.data.diaryData);
+          setRecordDt(res.data.diaryData.regDt);
+        } else {
+          alert(res.message);
+        }
       });
   }
 
@@ -184,12 +201,16 @@ export default function Record({ params: { id } }: DiarParamsType) {
         },
         body: JSON.stringify(diaryDto),
       })
-        .then(() => {
-          alert('등록이 완료되었습니다');
-          router.push('/diary');
+        .then(res => res.json())
+        .then((res) => {
+          if (res.status === 200) {
+            alert(res.message);
+            router.push('/diary');
+          } else {
+            alert(res.message);
+          }
         })
         .catch(error => {
-          console.error(error);
           alert('[ERR: DIR01] 등록이 실패하였습니다. 잠시 후 다시 시도해주세요.');
         });
     }
@@ -197,7 +218,7 @@ export default function Record({ params: { id } }: DiarParamsType) {
 
   /**
    * 다이어리 수정하기 버튼 클릭 이벤트 (수정)
-   */
+  */
   const updateDiaryOnclick = () => {
     if (window.confirm('수정하시겠습니까?')) {
       fetch('/api/diary/updDiaryItem', {
@@ -211,11 +232,16 @@ export default function Record({ params: { id } }: DiarParamsType) {
           recSeq: diarySeq
         }),
       })
-        .then(() => {
-          alert('수정이 완료되었습니다.');
+        .then(res => res.json())
+        .then(res => {
+          if (res.status === 200) {
+            alert(res.message);
+            router.push(`/diary/${diarySeq}`);
+          } else {
+            alert(res.message);
+          }
         })
         .catch(error => {
-          console.error(error);
           alert('[ERR: DIR02] 수정이 실패하였습니다. 잠시 후 다시 시도해주세요.');
         });
     }
@@ -236,9 +262,14 @@ export default function Record({ params: { id } }: DiarParamsType) {
           recSeq: diarySeq,
         }),
       })
-        .then(() => {
-          alert('삭제가 완료되었습니다');
-          router.push('/diary');
+        .then(res => res.json())
+        .then(res => {
+          if (res.status === 200) {
+            alert(res.message);
+            router.push('/diary');
+          } else {
+            alert(res.message);
+          }
         })
         .catch(error => {
           console.error(error);
@@ -249,7 +280,9 @@ export default function Record({ params: { id } }: DiarParamsType) {
 
 
   useEffect(() => {
-    setDiaryDto({});
+    setDiaryDto({
+      userSeq: localStorage.getItem('accessToken') as string
+    });
 
     // Diary Date 및 데이터 설정
     if (id === 'record') {
@@ -263,7 +296,7 @@ export default function Record({ params: { id } }: DiarParamsType) {
       const Today = Year + '.' + Month + '.' + Day;
 
       setRecordDt(Today);
-      setDiaryDto({ ...diaryDto, date: Today });
+      setDiaryDto({ ...diaryDto, date: Today, userSeq: localStorage.getItem('accessToken') as string });
     } else {
       setDiarySeq(id);
       // 수정, 삭제 모드
@@ -276,6 +309,10 @@ export default function Record({ params: { id } }: DiarParamsType) {
       }
     }
   }, [id])
+
+  useEffect(() => {
+    const userSeq = localStorage.getItem('accessToken');
+  }, [])
 
 
   return (

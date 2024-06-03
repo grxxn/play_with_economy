@@ -1,9 +1,10 @@
+
 import Image from "next/image";
 import styles from "./home.module.scss";
 import mainImg from '../public/assets/images/main1_icon.png';
 import Link from "next/link";
-
 export default function Home() {
+
   return (
     <div className={styles.mainWrapper}>
       <div className={styles.mainSection}>

@@ -36,11 +36,14 @@ export default function LearnCardList() {
       })
     })
       .then(res => res.json())
-      .then(data => {
-        let copyPageNum = pageNum;
-        setPageNum(++copyPageNum);
-
-        setLearnCardList([...learnCardList, ...data]);
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          let copyPageNum = pageNum;
+          setPageNum(++copyPageNum);
+          setLearnCardList([...learnCardList, ...res.data]);
+        } else {
+          alert('[ERR: LRN01] 목록 조회에 실패하였습니다. 잠시 후 다시 시도해 주세요.')
+        }
       });
   }
 
@@ -50,10 +53,8 @@ export default function LearnCardList() {
   const getLrnBardTotAmt = () => {
     fetch('/api/learn/getLearnAmt')
       .then(res => res.json())
-      .then(data => {
-        if (data.length > 0) {
-          setTotAmt(data[0].totAmt);
-        }
+      .then(res => {
+        if (res.status === 200) setTotAmt(res.data.totAmt);
       })
   }
 
@@ -83,13 +84,13 @@ export default function LearnCardList() {
         <InfiniteScroll
           pageStart={0}
           loadMore={getLrnBard}
-          hasMore={learnCardList.length !== totAmt}
+          hasMore={learnCardList.length != totAmt}
           className={styles.cardList}
         >
           {
-            learnCardList.map(item => (
+            learnCardList.map((item, idx) => (
               <LearnCard
-                key={item.lrnBardSeq}
+                key={idx}
                 lrnBardSeq={item.lrnBardSeq}
                 lrnBardTitl={item.lrnBardTitl}
                 lrnBardSubTitl={item.lrnBardSubTitl}
