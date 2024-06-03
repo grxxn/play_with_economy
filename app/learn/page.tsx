@@ -69,9 +69,6 @@ export default function LearnCardList() {
     getLrnBardTotAmt();
   }, [])
 
-  useEffect(() => {
-    console.log(learnCardList.length, totAmt)
-  }, [learnCardList])
 
   return (
     <div className={styles.container}>

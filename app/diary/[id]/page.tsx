@@ -62,7 +62,13 @@ export default function Record({ params: { id } }: DiarParamsType) {
    * @param recSeq
    */
   const getDiaryItem = (recSeq: string) => {
-    fetch(`/api/diary/getDiaryItem?recSeq=${recSeq}`)
+    fetch(`/api/diary/getDiaryItem?recSeq=${recSeq}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
       .then(res => res.json())
       .then(res => {
         if (res.status === 200) {

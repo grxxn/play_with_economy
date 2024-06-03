@@ -15,7 +15,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
       FROM "TB_LRN_BARD"
       WHERE "USE_YN" = 'Y'
     `;
-    console.log(rows)
 
     return NextResponse.json({
       status: 200,
