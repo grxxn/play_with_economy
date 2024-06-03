@@ -33,7 +33,16 @@ export default function DiaryList() {
    * 다이어리 리스트 조회
    */
   const getListData = (userSeq: string) => {
-    fetch(`/api/diary/getDiaryList?userSeq=${userSeq}`)
+    fetch('/api/diary/getDiaryList', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userSeq: userSeq
+      })
+    })
       .then(res => res.json())
       .then(res => {
         if (res.status === 200) {

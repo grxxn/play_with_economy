@@ -7,11 +7,12 @@ import { NextRequest, NextResponse } from "next/server";
  * @param res 
  * @returns 
  */
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
 
   try {
 
-    const userSeq = req.nextUrl.searchParams.get("userSeq");
+    const body = await req.json();
+    const userSeq = parseInt(body.userSeq);
 
     const { rows } = await sql`
       SELECT "REC_SEQ"			as "recSeq"
@@ -38,7 +39,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
       status: 400,
       statusText: "Failed",
       message: "ERR S001: 리스트 조회 실패. 잠시 후 다시 시도해주세요.",
-      errorMsg: err
     });
 
   }
