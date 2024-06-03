@@ -52,7 +52,7 @@ const Header = () => {
       {
         isLogin
           ? <button type='button' onClick={logoutClickHandler}>로그아웃</button>
-          : <Link href={'Login'}>로그인</Link>
+          : <Link href={'/login'}>로그인</Link>
       }
     </header>
   );
