@@ -37,7 +37,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     return NextResponse.json({
       status: 400,
       statusText: "Failed",
-      message: "ERR S001: 리스트 조회 실패. 잠시 후 다시 시도해주세요."
+      message: "ERR S001: 리스트 조회 실패. 잠시 후 다시 시도해주세요.",
+      errorMsg: err
     });
 
   }

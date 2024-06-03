@@ -38,8 +38,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return NextResponse.json({
       status: 400,
       statusText: "Failed",
-      message: "ERR S001: 중복 확인 실패. 잠시 후 다시 시도해주세요.",
-      errorMsg: err
+      message: "ERR S001: 중복 확인 실패. 잠시 후 다시 시도해주세요."
     });
 
   }
