@@ -40,6 +40,16 @@
 * Naver API를 사용해 기사 데이터 조회 후 출력합니다.
 * 추후 기사 검색 기능 추가 예정입니다.
 
+<br/>
+
+## ⚙️ Stack  
+<img src="https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white"> 
+<img src="https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white"> 
+<img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white"> 
+<img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"> 
+
+* style: SCSS
+* library: react-infinite-scroller, mysql2
 
 <br/>
 
@@ -53,17 +63,6 @@
 #### Production
     npm run build
 
-
-<br/>
-
-## ⚙️ Stack  
-<img src="https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white"> 
-<img src="https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white"> 
-<img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white"> 
-<img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"> 
-
-* style: SCSS
-* library: react-infinite-scroller, mysql2
 
 <br/>
 
