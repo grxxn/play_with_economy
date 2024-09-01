@@ -25,22 +25,13 @@ export default function LearnCardList() {
    * 게시판 리스트 조회
    */
   const getLrnBard = () => {
-    fetch('/api/learn/getLearnList', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        currItemCnt: pageNum * 8
-      })
-    })
+    fetch(`/api/lrnBoardList?currItemCnt=${pageNum * 8}`)
       .then(res => res.json())
       .then(data => {
         let copyPageNum = pageNum;
         setPageNum(++copyPageNum);
 
-        setLearnCardList([...learnCardList, ...data]);
+        setLearnCardList([...learnCardList, ...data.data]);
       });
   }
 
@@ -48,11 +39,11 @@ export default function LearnCardList() {
    * 게시판 글 총 갯수 조회
    */
   const getLrnBardTotAmt = () => {
-    fetch('/api/learn/getLearnAmt')
+    fetch('/api/lrnBoardAmt')
       .then(res => res.json())
       .then(data => {
-        if (data.length > 0) {
-          setTotAmt(data[0].totAmt);
+        if (data.data > 0) {
+          setTotAmt(data.data);
         }
       })
   }
@@ -61,7 +52,7 @@ export default function LearnCardList() {
 
 
   useEffect(() => {
-    const userRole = localStorage.getItem('userRole');
+    const userRole = localStorage.getItem('role');
     setIsAdmin(userRole && userRole.indexOf('ADMIN') > -1 ? true : false);
 
     // 게시글 총 갯수 조회

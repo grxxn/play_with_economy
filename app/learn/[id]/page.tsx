@@ -36,21 +36,17 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
   const router = useRouter();
 
   // ======================== 함수 선언 ========================
+
+  /**
+   * 게시판 상세 조회
+   * @param seq 
+   */
   const getLrnDetail = (seq: string) => {
-    fetch('/api/learn/getLearnItem', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        lrnBardSeq: seq
-      })
-    })
+    fetch(`/api/lrnBoardItem?seq=${seq}`)
       .then(res => res.json())
-      .then(data => {
-        if (data.length > 0) {
-          setLrnDetailDto(data[0]);
+      .then((data) => {
+        if (data.data) {
+          setLrnDetailDto(data.data);
         }
       })
   }
@@ -62,14 +58,14 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
    */
   const delBtnClickHandler = () => {
     if (confirm('게시글을 삭제하시겠습니까?')) {
-      fetch('/api/learn/delLearnItem', {
-        method: 'POST',
+      fetch('/api/lrnBoardItem', {
+        method: 'DELETE',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          lrnBardSeq: id
+          seq: id
         })
       })
         .then(res => res.json())
@@ -81,7 +77,7 @@ export default function LearnDetail({ params: { id } }: LearnParamsType) {
   }
 
   useEffect(() => {
-    const userRole = localStorage.getItem('userRole');
+    const userRole = localStorage.getItem('role');
     setIsAdmin(userRole && userRole.indexOf('ADMIN') > -1 ? true : false);
 
     getLrnDetail(id);

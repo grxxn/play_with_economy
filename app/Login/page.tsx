@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import styles from "./components/login.module.scss";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface LoginType {
@@ -58,40 +58,32 @@ export default function Login() {
     } else {
       // 아이디 기억하기
       if (loginInptVal.rememberMe) {
-        localStorage.setItem('userId', loginInptVal.userId);
+        localStorage.setItem('id', loginInptVal.userId);
       } else {
-        localStorage.removeItem('userId');
+        localStorage.removeItem('id');
       }
 
       // 로그인 통신
-      fetch('/api/login', {
+      fetch('/user/login', {
         method: 'POST',
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify(loginInptVal)
+        body: 'username=' + loginInptVal.userId + '&password=' + loginInptVal.userPw
       })
-        .then(res => {
-          return res.json()
-        })
+        .then(res => res.json())
         .then(data => {
-          if (data.length > 0) {
-            // localStorage에 로그인 데이터 저장
-            localStorage.setItem('accessToken', data[0].USER_SEQ);
-            localStorage.setItem('userId', data[0].USER_ID);
-            localStorage.setItem('userRole', data[0].USER_ROLE);
 
-            // 로그인 페이지로 이동
-            router.push('/');
-          } else {
-            alert('아이디 또는 비밀번호가 일치하지 않습니다.');
-            setLoginInptVal({ ...loginInptVal, userPw: '' });
-            if (pwInptRef.current) pwInptRef.current.focus();
-          }
+          localStorage.setItem('accessToken', data.principal.userSeq);
+          localStorage.setItem('id', data.principal.id);
+          localStorage.setItem('role', data.principal.role);
+
+          // 메인 페이지로 이동
+          router.push('/');
         })
-        .catch(err => {
-          alert('아이디 또는 비밀번호가 일치하지 않습니다.');
+        .catch((err) => {
+          console.error(err)
+          alert('오류가 발생하였습니다. 잠시 후 다시 시도해주세요.');
           setLoginInptVal({ ...loginInptVal, userPw: '' });
           if (pwInptRef.current) pwInptRef.current.focus();
         });
@@ -101,7 +93,7 @@ export default function Login() {
 
   useEffect(() => {
     // 아이디 기억하기 - 로컬스토리지 확인
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('id');
     if (userId) {
       setLoginInptVal({ ...loginInptVal, userId: userId, rememberMe: true });
     }

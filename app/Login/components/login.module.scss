@@ -34,7 +34,7 @@
       display: inline-block;
       color: #7A7A7A !important;
       font-size: 14px;
-      margin-bottom: 10px;
+      margin-bottom: 4px;
 
       &:last-child {
         display: inline-block;
@@ -46,11 +46,11 @@
       width: 434px;
       height: 40px;
       border: 1px solid #B3B3B3;
-      border-radius: 14px;
+      border-radius: 10px;
       padding: 0 15px;
 
       &:first-of-type {
-        margin-bottom: 22px;
+        margin-bottom: 18px;
       }
 
       &:nth-of-type(2) {
@@ -68,6 +68,7 @@
     button {
       width: 100%;
       font-size: 14px;
+      padding: 10px 0;
 
       &>a {
         width: 100%;
@@ -76,7 +77,7 @@
     }
 
     button:first-of-type {
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
 
     button:last-of-type {

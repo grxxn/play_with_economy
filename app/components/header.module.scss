@@ -32,6 +32,18 @@
     }
   }
 
+  .loginInfo {
+    font-size: 13px;
+    color: #999;
+    margin-right: 30px;
+
+    &>span {
+      margin-right: 16px;
+      color: #489036;
+      text-decoration: underline;
+    }
+  }
+
   &>a,
   &>button {
     // login button

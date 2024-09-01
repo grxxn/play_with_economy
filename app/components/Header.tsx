@@ -14,6 +14,7 @@ import { usePathname, useRouter } from 'next/navigation';
 const Header = () => {
   // ======================== 변수 선언 ========================
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string | null>('');
   const pathName = usePathname();
   const router = useRouter();
 
@@ -40,7 +41,10 @@ const Header = () => {
     // 로그인 데이터 확인
     const accessToken = localStorage.getItem('accessToken');
 
-    if (accessToken && accessToken.length > 0) setIsLogin(true);
+    if (accessToken && accessToken.length > 0) {
+      setIsLogin(true);
+      setUserId(localStorage.getItem('id'));
+    }
   }, [pathName])
 
   return (
@@ -56,7 +60,10 @@ const Header = () => {
       </div>
       {
         isLogin
-          ? <button type='button' onClick={logoutClickHandler}>로그아웃</button>
+          ? <div className={styles.loginInfo}>
+            <span>{userId} 님</span>
+            <button type='button' onClick={logoutClickHandler}>로그아웃</button>
+          </div>
           : <Link href={'/login'}>로그인</Link>
       }
     </header>
